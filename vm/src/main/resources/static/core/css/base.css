@@ -1,0 +1,27 @@
+.f-layout-m {
+    margin: 1%;
+    padding: 1%;
+    border: #ddd 1px solid;
+    overflow: auto;
+    max-height: 80%;
+    z-index: 2 !important;
+    position: absolute;
+    clear: both;
+    display: block;
+    width: 95%;
+}
+.f-layout-b-btn {
+    margin: 5px;
+    padding: 5px;
+    text-align: right;
+    bottom: 0;
+    overflow: hidden;
+    z-index: 4 !important;
+    position: absolute;
+    display: block;
+    width: 100%;
+    right: 0px;
+}
+body {
+    height: 100%;
+}

@@ -1,0 +1,19 @@
+/*弹出框代码*/
+	.form-box{
+		width: 90%;
+		margin:0 auto ;
+		display: block;
+		margin-bottom: 10px
+	}
+	.form-t{
+		width: 100%;
+		color:#009688;
+		border-bottom: 1px solid #009688;
+		height: 30px;
+		font: 400 16px/30px "SimHei";
+		margin-bottom: 10px
+	}
+	.btn-box{
+		text-align: right;
+		margin:0 auto;
+	}
