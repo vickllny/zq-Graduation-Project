@@ -45,21 +45,22 @@
     layui.use(['table'], function(){
         var table = layui.table;
 
-        var tableWidth = $('#table1').parents('.tableBox').width();
         var cols = [
             <#list columns as list>
                 <#if !list.pk>
-                    {field:'${list.fieldName}', title:'${list.logicName}', width:240},
+            {field:'${list.fieldName}', title:'${list.logicName}'},
                 </#if>
             </#list>
-            {field: 'operation', title:'操作', toolbar: '#operation', width: tableWidth-${columns?size*240}}
+            {field: 'operation', title:'操作', toolbar: '#operation'}}
         ]
         table1 = table.render({
             elem: '#table1',
             url: base + '/${simpleName}/page',
             toolbar: '#toolbar',
             title: '${logicName}表',
+            cellMinWidth: 200,
             cols: [cols],
+            height: 'full-10',
             page: true,
             request: {
                 pageName: 'pageNumber',
