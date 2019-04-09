@@ -48,4 +48,9 @@ public class UserServiceImpl extends BaseServiceImpl<User, String> implements Us
     public List<User> findAll() {
         return super.findList(userRepository.findAll());
     }
+
+    @Override
+    public User findByUserName(String userName) {
+        return userRepository.findByUserName(userName);
+    }
 }

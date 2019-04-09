@@ -13,4 +13,10 @@ import org.springframework.data.repository.PagingAndSortingRepository;
 public interface UserRepository extends PagingAndSortingRepository<User,String>, JpaSpecificationExecutor<User> {
 
 
+    /**
+     * 根据userName查询
+     * @param userName
+     * @return
+     */
+    User findByUserName(String userName);
 }

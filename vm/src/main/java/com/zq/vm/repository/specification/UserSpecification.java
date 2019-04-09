@@ -22,7 +22,7 @@ public class UserSpecification {
     public static Specification<User> specification(final User user){
     	return (root, criteriaQuery, criteriaBuilder) -> {
 			List<Predicate> predicates = new ArrayList<>();
-            Optional.ofNullable(user.getUserNane()).ifPresent(userNane -> predicates.add(criteriaBuilder.equal(root.get("userNane").as(String.class), userNane)));
+            Optional.ofNullable(user.getUserName()).ifPresent(userName -> predicates.add(criteriaBuilder.equal(root.get("userName").as(String.class), userName)));
             Optional.ofNullable(user.getPassword()).ifPresent(password -> predicates.add(criteriaBuilder.equal(root.get("password").as(String.class), password)));
             Optional.ofNullable(user.getPhoneNumber()).ifPresent(phoneNumber -> predicates.add(criteriaBuilder.equal(root.get("phoneNumber").as(String.class), phoneNumber)));
             Optional.ofNullable(user.getWorkNumber()).ifPresent(workNumber -> predicates.add(criteriaBuilder.equal(root.get("workNumber").as(String.class), workNumber)));

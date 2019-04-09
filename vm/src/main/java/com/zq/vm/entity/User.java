@@ -28,8 +28,8 @@ public class User{
 	/**
 	 * 用户名
 	 */
-	@Column(name="user_nane",length = 255, nullable = true)
-	private String userNane;
+	@Column(name="user_name",length = 255, nullable = true)
+	private String userName;
 	/**
 	 * 密码
 	 */
@@ -74,15 +74,15 @@ public class User{
 	/**
 	 * 获取用户名
 	 */
-	public String getUserNane(){
-		return userNane;
+	public String getUserName(){
+		return userName;
 	}
 	/**
 	* 设置用户名
 	* @param userNane 用户名
 	*/
-	public void setUserNane(String userNane){
-		this.userNane=userNane;
+	public void setUserName(String userNane){
+		this.userName=userName;
 	}
 	/**
 	 * 获取密码

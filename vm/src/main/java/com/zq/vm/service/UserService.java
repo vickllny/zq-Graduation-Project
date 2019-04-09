@@ -49,4 +49,11 @@ public interface UserService{
      * @return
      */
     List<User> findAll();
+
+    /**
+     * 根据userName查询
+     * @param userName
+     * @return
+     */
+    User findByUserName(String userName);
 }

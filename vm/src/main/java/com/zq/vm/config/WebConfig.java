@@ -1,6 +1,9 @@
 package com.zq.vm.config;
 
 import com.zq.vm.config.interceptor.BaseInterceptor;
+import com.zq.vm.filter.LoginFilter;
+import org.springframework.boot.web.servlet.FilterRegistrationBean;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.format.FormatterRegistry;
 import org.springframework.http.converter.HttpMessageConverter;
@@ -11,6 +14,7 @@ import org.springframework.web.method.support.HandlerMethodReturnValueHandler;
 import org.springframework.web.servlet.HandlerExceptionResolver;
 import org.springframework.web.servlet.config.annotation.*;
 
+import javax.servlet.FilterRegistration;
 import java.util.List;
 
 @Configuration
@@ -104,5 +108,17 @@ public class WebConfig implements WebMvcConfigurer {
     @Override
     public MessageCodesResolver getMessageCodesResolver() {
         return null;
+    }
+
+    /**
+     * loginFilter
+     * @return
+     */
+    @Bean
+    public FilterRegistrationBean loginFilter() {
+        FilterRegistrationBean bean = new FilterRegistrationBean();
+        bean.setFilter(new LoginFilter());
+        bean.addUrlPatterns("/*");
+        return bean;
     }
 }
