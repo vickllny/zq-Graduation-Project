@@ -98,7 +98,7 @@ public class CustomerSetMealProductionController {
      */
     @RequestMapping(value = "/customerSetMealProduction/list")
     public String list(final Model model){
-        return "/customerSetMealProduction/list";
+        return "customerSetMealProduction/list";
     }
 
    /**
@@ -107,7 +107,7 @@ public class CustomerSetMealProductionController {
      */
     @RequestMapping(value = "/customerSetMealProduction/add")
     public String add(final Model model){
-        return "/customerSetMealProduction/edit";
+        return "customerSetMealProduction/edit";
     }
 
     /**
@@ -118,6 +118,6 @@ public class CustomerSetMealProductionController {
     @RequestMapping(value = "/customerSetMealProduction/edit")
     public String edit(final String id,final Model model){
         Optional.ofNullable(customerSetMealProductionService.findOne(id)).ifPresent(customerSetMealProduction -> model.addAttribute("bean",customerSetMealProduction));
-        return "/customerSetMealProduction/edit";
+        return "customerSetMealProduction/edit";
     }
 }

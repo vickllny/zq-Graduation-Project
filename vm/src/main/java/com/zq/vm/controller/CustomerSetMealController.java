@@ -142,7 +142,7 @@ public class CustomerSetMealController {
      */
     @RequestMapping(value = "/customerSetMeal/list")
     public String list(final Model model){
-        return "/customerSetMeal/list";
+        return "customerSetMeal/list";
     }
 
    /**
@@ -153,7 +153,7 @@ public class CustomerSetMealController {
     public String add(final Model model){
     	model.addAttribute("customers", customerService.findAll());
     	model.addAttribute("setMeals", setMealInformationService.findAll());
-        return "/customerSetMeal/edit";
+        return "customerSetMeal/edit";
     }
 
     /**
@@ -164,7 +164,7 @@ public class CustomerSetMealController {
     @RequestMapping(value = "/customerSetMeal/edit")
     public String edit(final String id,final Model model){
         Optional.ofNullable(customerSetMealService.findOne(id)).ifPresent(customerSetMeal -> model.addAttribute("bean",customerSetMeal));
-        return "/customerSetMeal/edit";
+        return "customerSetMeal/edit";
     }
     
     /**
@@ -176,7 +176,7 @@ public class CustomerSetMealController {
     @RequestMapping(value = "/customerSetMeal/viewSetMealDetail")
     public String viewSetMealDetail(final Model model,final String setMealId) {
     	model.addAttribute("setMealId", setMealId);
-    	return "/customerSetMeal/setMealDetail";
+    	return "customerSetMeal/setMealDetail";
     }
     
     /**
@@ -188,7 +188,7 @@ public class CustomerSetMealController {
     @RequestMapping(value = "/customerSetMeal/deduction/{id}")
     public String deduction(final Model model,@PathVariable(value = "id")final String id) {
     	model.addAttribute("id", id);
-    	return "/customerSetMeal/deduction";
+    	return "customerSetMeal/deduction";
     }
     
     /**
