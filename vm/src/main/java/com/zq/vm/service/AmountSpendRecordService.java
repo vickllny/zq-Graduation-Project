@@ -1,12 +1,15 @@
 package com.zq.vm.service;
 
 import com.zq.vm.entity.AmountSpendRecord;
+import com.zq.vm.entity.vo.AmountSpendRecordVo;
 
 import org.springframework.data.domain.Page;
 
+import java.util.List;
+
 /**
- * 描述: 余额信息业务接口
- * Time: 2019-02-24 18:39:13
+ * 描述: 余额充值记录业务接口
+ * Time: 2019-03-23 13:44:04
  * @author: zou.qian
  * @version 1.0
  */
@@ -42,4 +45,19 @@ public interface AmountSpendRecordService{
     */
 	AmountSpendRecord findOne(String id);
 
+    /**
+     * 查询所有
+     * @return
+     */
+    List<AmountSpendRecord> findAll();
+
+    /**
+     * 搜索查询
+     * @param pageNumber
+     * @param pageSize
+     * @param amountSpendRecord
+     * @return
+     */
+	Page<AmountSpendRecord> findPageByCriteria(Integer pageNumber, Integer pageSize,
+			AmountSpendRecordVo amountSpendRecord);
 }

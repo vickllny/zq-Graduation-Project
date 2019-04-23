@@ -4,9 +4,11 @@ import com.zq.vm.entity.AmountRechargeRecord;
 
 import org.springframework.data.domain.Page;
 
+import java.util.List;
+
 /**
- * 描述: 余额信息业务接口
- * Time: 2019-02-24 18:31:50
+ * 描述: 余额充值记录业务接口
+ * Time: 2019-03-23 12:49:34
  * @author: zou.qian
  * @version 1.0
  */
@@ -42,4 +44,9 @@ public interface AmountRechargeRecordService{
     */
 	AmountRechargeRecord findOne(String id);
 
+    /**
+     * 查询所有
+     * @return
+     */
+    List<AmountRechargeRecord> findAll();
 }

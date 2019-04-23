@@ -1,15 +1,17 @@
 package com.zq.vm.repository.specification;
 
-import  com.zq.vm.entity.Balance;
-import org.springframework.data.jpa.domain.Specification;
-
-import javax.persistence.criteria.Predicate;
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+
+import javax.persistence.criteria.Predicate;
+
+import org.springframework.data.jpa.domain.Specification;
+
+import  com.zq.vm.entity.Balance;
 
 /**
- * 余额信息条件查询
+ * 余额条件查询
  */
 public class BalanceSpecification {
 
@@ -21,8 +23,8 @@ public class BalanceSpecification {
     public static Specification<Balance> specification(final Balance balance){
     	return (root, criteriaQuery, criteriaBuilder) -> {
 			List<Predicate> predicates = new ArrayList<>();
-			predicates.add(criteriaBuilder.equal(root.get("customerId").as(String.class), balance.getCustomerId()));
-			predicates.add(criteriaBuilder.equal(root.get("balance").as(BigDecimal.class), balance.getBalance()));
+            Optional.ofNullable(balance.getCustomerId()).ifPresent(customerId -> predicates.add(criteriaBuilder.equal(root.get("customerId").as(String.class), customerId)));
+            Optional.ofNullable(balance.getBalance()).ifPresent(balance1 -> predicates.add(criteriaBuilder.equal(root.get("balance").as(String.class), balance)));
 			return criteriaQuery.where(criteriaBuilder.and(predicates.toArray(new Predicate[predicates.size()]))).getRestriction();
         };
 	}

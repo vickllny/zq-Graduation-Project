@@ -1,0 +1,60 @@
+.mainBox {
+	padding: 3px;
+	overflow: hidden;
+}
+body {
+	overflow: hidden;
+}
+.tabBox {
+	width: 78%;
+	float: left;
+}
+.contentBox {
+	width: 20%;
+	float: left;
+	border-left: 1px solid #e6e6e6;
+}
+.titleBox {
+	font-size: 18px;
+	padding: 9px 9px 7px 9px;;
+	margin-top: 10px;
+	border-bottom: 1px solid #e6e6e6;
+	border-right: 1px solid #e6e6e6;
+}
+.content {
+	padding: 5px;
+	width: 94%;
+	border-right: 1px solid #e6e6e6;
+	border-bottom: 1px solid #e6e6e6;
+	height: 374px;
+	overflow: auto;
+}
+.content .contentSelect div {
+	height: 30px;
+	width: 90%;
+	margin: 2px auto;
+	border: 1px solid #e6e6e6;
+	line-height: 30px;
+	border-radius: 7px;
+	padding: 0 5px;
+}
+.content .contentSelect div .labName {
+	float: left;
+	width: 56%;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	display: block;
+}
+ .content .contentSelect div .labCount {
+	float: left;
+}
+.content .contentSelect div i {
+	float: right;
+	cursor: pointer;
+}
+.btns {
+	padding: 10px;
+  	border-right: 1px solid #e6e6e6;
+	border-bottom: 1px solid #e6e6e6;
+}

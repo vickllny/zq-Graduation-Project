@@ -4,13 +4,13 @@ import  com.zq.vm.entity.AmountRechargeRecord;
 import org.springframework.data.jpa.domain.Specification;
 
 import javax.persistence.criteria.Predicate;
-import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
+import java.util.Date;
+import java.util.Optional;
 
 /**
- * 余额信息条件查询
+ * 余额充值记录条件查询
  */
 public class AmountRechargeRecordSpecification {
 
@@ -22,9 +22,9 @@ public class AmountRechargeRecordSpecification {
     public static Specification<AmountRechargeRecord> specification(final AmountRechargeRecord amountRechargeRecord){
     	return (root, criteriaQuery, criteriaBuilder) -> {
 			List<Predicate> predicates = new ArrayList<>();
-			predicates.add(criteriaBuilder.equal(root.get("customerId").as(String.class), amountRechargeRecord.getCustomerId()));
-			predicates.add(criteriaBuilder.equal(root.get("rechargeAmount").as(BigDecimal.class), amountRechargeRecord.getRechargeAmount()));
-			predicates.add(criteriaBuilder.equal(root.get("rechargeTime").as(Date.class), amountRechargeRecord.getRechargeTime()));
+            Optional.ofNullable(amountRechargeRecord.getCustomerId()).ifPresent(customerId -> predicates.add(criteriaBuilder.equal(root.get("customerId").as(String.class), customerId)));
+            Optional.ofNullable(amountRechargeRecord.getRechargeAmount()).ifPresent(rechargeAmount -> predicates.add(criteriaBuilder.equal(root.get("rechargeAmount").as(String.class), rechargeAmount)));
+            Optional.ofNullable(amountRechargeRecord.getRechargeTime()).ifPresent(rechargeTime -> predicates.add(criteriaBuilder.equal(root.get("rechargeTime").as(Date.class), rechargeTime)));
 			return criteriaQuery.where(criteriaBuilder.and(predicates.toArray(new Predicate[predicates.size()]))).getRestriction();
         };
 	}

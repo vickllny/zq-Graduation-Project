@@ -51,7 +51,7 @@
             {field:'${list.fieldName}', title:'${list.logicName}'},
                 </#if>
             </#list>
-            {field: 'operation', title:'操作', toolbar: '#operation'}}
+            {field: 'operation', title:'操作', toolbar: '#operation'}
         ]
         table1 = table.render({
             elem: '#table1',
@@ -98,7 +98,7 @@
                     fixed: false,
                     content: url
                 });
-            }else if(obj.event = 'delete'){
+            }else if(obj.event === 'del'){
                 var url = base + '/${simpleName}/' + data.id;
                 layer.confirm('确认删除此条数据?', {icon: 2, title:'提示'}, function(index){
                     AjaxUtil.del(url,function(json){

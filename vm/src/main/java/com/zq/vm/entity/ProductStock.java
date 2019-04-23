@@ -2,9 +2,16 @@ package com.zq.vm.entity;
 
 import javax.persistence.*;
 
+import java.util.Date;
+
+import org.hibernate.annotations.GenericGenerator;
+import org.springframework.format.annotation.DateTimeFormat;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 /**
- * 描述: 余额信息实体类
- * Time: 2019-02-24 18:55:51
+ * 描述: 商品库存实体类
+ * Time: 2019-04-13 14:48:40
  * @author: zou.qian
  * @version 1.0
  */
@@ -15,7 +22,8 @@ public class ProductStock{
 	 * 主键
 	 */
 	@Id
-    @GeneratedValue(strategy= GenerationType.IDENTITY)
+	@GenericGenerator(name="idGenerator", strategy="uuid")
+	@GeneratedValue(generator="idGenerator")
 	private String id;
 	/**
 	 * 商品id
@@ -27,7 +35,18 @@ public class ProductStock{
 	 */
 	@Column(name="product_stock_number",length = 11, nullable = true)
 	private Integer productStockNumber;
-	
+	/**
+	 * 类别  1->入库数量  -1->出库数量
+	 */
+	@Column(name="type",length = 11, nullable = false)
+	private Integer type;
+	/**
+	 * 创建时间
+	 */
+	@JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd HH:mm:ss")
+	@DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
+	@Column(name="create_time", nullable = false)
+	private Date createTime;
 	/**
 	 * 获取主键
 	 */
@@ -66,5 +85,17 @@ public class ProductStock{
 	*/
 	public void setProductStockNumber(Integer productStockNumber){
 		this.productStockNumber=productStockNumber;
+	}
+	public Integer getType() {
+		return type;
+	}
+	public void setType(Integer type) {
+		this.type = type;
+	}
+	public Date getCreateTime() {
+		return createTime;
+	}
+	public void setCreateTime(Date createTime) {
+		this.createTime = createTime;
 	}
 }

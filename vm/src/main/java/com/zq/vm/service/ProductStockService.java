@@ -4,9 +4,11 @@ import com.zq.vm.entity.ProductStock;
 
 import org.springframework.data.domain.Page;
 
+import java.util.List;
+
 /**
- * 描述: 余额信息业务接口
- * Time: 2019-02-24 18:55:51
+ * 描述: 商品库存业务接口
+ * Time: 2019-04-13 14:48:40
  * @author: zou.qian
  * @version 1.0
  */
@@ -42,4 +44,25 @@ public interface ProductStockService{
     */
 	ProductStock findOne(String id);
 
+    /**
+     * 查询所有
+     * @return
+     */
+    List<ProductStock> findAll();
+
+    /**
+     * 根据商品名称查询
+     * @param pageNumber
+     * @param pageSize
+     * @param name
+     * @return
+     */
+	Page<ProductStock> findPageByProductName(Integer pageNumber, Integer pageSize, String name);
+
+	/**
+	 * 根据产品id查询
+	 * @param productId
+	 * @return
+	 */
+	List<ProductStock> findByProductId(String productId);
 }

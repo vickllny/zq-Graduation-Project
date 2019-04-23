@@ -1,13 +1,19 @@
 package com.zq.vm.entity;
 
-import org.springframework.format.annotation.DateTimeFormat;
-
 import javax.persistence.*;
+
+import java.math.BigDecimal;
 import java.util.Date;
 
+import org.hibernate.annotations.GenericGenerator;
+
+import org.springframework.format.annotation.DateTimeFormat;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 /**
- * 描述: 余额信息实体类
- * Time: 2019-02-24 19:02:59
+ * 描述: 服务信息表(商品)实体类
+ * Time: 2019-04-16 23:18:35
  * @author: zou.qian
  * @version 1.0
  */
@@ -18,7 +24,8 @@ public class ServiceInformation{
 	 * 主键
 	 */
 	@Id
-    @GeneratedValue(strategy= GenerationType.IDENTITY)
+	@GenericGenerator(name="idGenerator", strategy="uuid")
+	@GeneratedValue(generator="idGenerator")
 	private String id;
 	/**
 	 * 服务名称
@@ -33,14 +40,20 @@ public class ServiceInformation{
 	/**
 	 * 创建时间
 	 */
+	@JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd HH:mm:ss")
 	@DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
 	@Column(name="create_time",length = 19, nullable = true)
 	private Date createTime;
 	/**
-	 * 服务类别id
+	 * 服务类别
 	 */
-	@Column(name="service_class_id",length = 32, nullable = false)
-	private String serviceClassId;
+	@Column(name="type",length = 32, nullable = false)
+	private String type;
+	/**
+	 * 单价
+	 */
+	@Column(name="unit_price",length = 10,precision=3, nullable = true)
+	private BigDecimal unitPrice;
 	
 	/**
 	 * 获取主键
@@ -95,16 +108,22 @@ public class ServiceInformation{
 		this.createTime=createTime;
 	}
 	/**
-	 * 获取服务类别id
+	 * 获取服务类别
 	 */
-	public String getServiceClassId(){
-		return serviceClassId;
+	public String getType(){
+		return type;
 	}
 	/**
-	* 设置服务类别id
-	* @param serviceClassId 服务类别id
+	* 设置服务类别
+	* @param type 服务类别
 	*/
-	public void setServiceClassId(String serviceClassId){
-		this.serviceClassId=serviceClassId;
+	public void setType(String type){
+		this.type=type;
+	}
+	public BigDecimal getUnitPrice() {
+		return unitPrice;
+	}
+	public void setUnitPrice(BigDecimal unitPrice) {
+		this.unitPrice = unitPrice;
 	}
 }

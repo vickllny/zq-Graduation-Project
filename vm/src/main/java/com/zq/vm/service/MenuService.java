@@ -63,4 +63,11 @@ public interface MenuService{
      * @return
      */
 	List<Menu> findByPid(String pid);
+
+	/**
+	 * 根据userId查询用户菜单
+	 * @param userId
+	 * @return
+	 */
+	List<Menu> findMenuByUserId(String userId);
 }

@@ -4,9 +4,11 @@ import com.zq.vm.entity.NumbersRechargeRecord;
 
 import org.springframework.data.domain.Page;
 
+import java.util.List;
+
 /**
- * 描述: 余额信息业务接口
- * Time: 2019-02-24 18:48:13
+ * 描述: 服务次数充值记录表业务接口
+ * Time: 2019-04-17 23:37:10
  * @author: zou.qian
  * @version 1.0
  */
@@ -42,4 +44,15 @@ public interface NumbersRechargeRecordService{
     */
 	NumbersRechargeRecord findOne(String id);
 
+    /**
+     * 查询所有
+     * @return
+     */
+    List<NumbersRechargeRecord> findAll();
+
+    /**
+     * 保存充值记录并扣款
+     * @param numbersRechargeRecord
+     */
+	void saveAndDeduction(NumbersRechargeRecord numbersRechargeRecord);
 }

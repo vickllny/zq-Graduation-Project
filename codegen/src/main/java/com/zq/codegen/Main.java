@@ -22,7 +22,7 @@ public class Main {
 	/**
 	 * 输出地址
 	 */
-	private static final String OUTPUT_DIR="/Users/wisesoft/vickllny/javadev/workspace/ws8/out";
+	private static final String OUTPUT_DIR="C:\\Users\\admin\\Desktop\\she";
 	/**
 	 * 模板地址
 	 */
@@ -37,11 +37,11 @@ public class Main {
 		//生成的java文件的报名
 		table.setPackage("com.zq.vm");
 		//表名,和数据库大小写一致，否则不能查询到注释
-		String tableName = "user";
+		String tableName = "customer_set_meal_production";
 		//实体类名
-		table.setEntityClass("User");
+		table.setEntityClass("CustomerSetMealProduction");
 		//模块名称,对应requestMapping的值
-		table.setModuleName("user");
+		table.setModuleName("customerSetMealProduction");
 		//作者
 		table.setAuthor("zou.qian");
 		
@@ -52,8 +52,8 @@ public class Main {
 		table.setAction(null);// 子模块
 		dba.queryTable(table);
 		//实体类中文名
-		table.setLogicName("用户");
-		
+		table.setLogicName("会员套餐商品关系表");
+		table.addVoField("String", "customerName", "会员名称").addVoField("String", "setMealName", "套餐名称").addVoField("String", "productName", "商品名称");
 		File templateFolder=ResourceUtils.getFile(TEMPLATE_DIR);
 		File outputDir=new File(OUTPUT_DIR);
 		TemplateEngine engine=new TemplateEngine(templateFolder,outputDir);

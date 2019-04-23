@@ -105,7 +105,7 @@
                             fixed: false,
                             content: url
                         });
-                    }else if(obj.event = 'delete'){
+                    }else if(obj.event == 'del'){
                     	var url = base + '/menu/' + data.id;
                     	layer.confirm('确认删除此条数据?', {icon: 2, title:'提示'}, function(index){
                    		  AjaxUtil.del(url,function(json){

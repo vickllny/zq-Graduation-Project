@@ -1,0 +1,92 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <title>套餐管理编辑</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" th:href="@{/layui/css/layui.css}">
+    <link rel="stylesheet" th:href="@{/mCustomScrollbar/jquery.mCustomScrollbar.css}">
+    <link rel="stylesheet" th:href="@{/core/css/combination.css}">
+    <style type="text/css">
+    	.contentBox{
+    		width: 100%;
+    	}
+    	.content {
+    		height: 90px;
+    	}
+    	.content .contentSelect div {
+    		width: 28%;
+    		float: left;
+    		margin-left: 2px;
+    	}
+    	.content .contentSelect div .labName {
+    		width: 88%;
+    	}
+    	.btns {
+    		float: right;
+    	}
+    </style>
+</head>
+<body>
+	<div class="contentBox">
+		<div class="titleBox">商品及数量</div>
+		<div class="content">
+			<div class="contentSelect"></div>
+		</div>
+		<div class="f-layout-b-btn btns">
+			<button class="layui-btn layui-btn-primary" type="button" onclick="closeCurrentIframe()">确定</button>
+		</div>
+	</div>
+<script th:inline="javascript">
+    var base = [[${base}]];
+    var id = [[${setMealId}]];
+</script>
+
+<script type="text/javascript" th:src="@{/jquery/jquery-1.10.2.min.js}"></script>
+<script th:src="@{/layui/layui.js}" charset="utf-8"></script>
+<script th:src="@{/AjaxUtil.js}" charset="utf-8"></script>
+<script th:src="@{/common.js}" charset="utf-8"></script>
+<script th:src="@{/mCustomScrollbar/jquery.mCustomScrollbar.js}" charset="utf-8"></script>
+
+<script type="text/html" id="operation">
+    <a class="layui-btn layui-btn-xs" lay-event="doSelect">选择</a>
+</script>
+
+<script>
+	layui.use(['element','table'], function(){
+	  var table = layui.table;
+	  var element = layui.element;
+      
+      //初始化已经选择了的
+      AjaxUtil.syncGet(base + '/setMealInformation/combinations?id='+id, function(json){
+    	  $.each(json, function(i, value){
+    		  doSelect(value.id,value.productName,value.type,value.count);
+    	  });
+      });
+      $(".content").mCustomScrollbar({
+    	  scrollInertia: 100,
+    	  axis:"y",
+    	  theme:"dark"
+      });
+	});
+	//选择后的事件
+	function doSelect(id,name,type,count){
+		if($("#"+id).length > 0){
+			add($("#"+id).find('.add'));
+			return;
+		}
+		var tagName = type == 1 ? '(商品)' : '(服务)';
+		var color = type == 1 ? '#FF9933' : '#3399CC';
+		var html = '<div id="'+id+'" type="'+type+'" style="background-color: '+color+'">';
+		html += '<span class="labName" title="'+tagName+name+'">'+tagName+name+'</span>';
+		html += '<span class="labCount">'+(count?count:1)+'</span>';
+		html += '</div>';
+		$('.contentSelect').append(html);
+		$('.content').mCustomScrollbar('update');
+	}
+</script>
+
+</body>
+</html>

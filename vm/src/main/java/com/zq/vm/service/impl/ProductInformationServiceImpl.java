@@ -10,9 +10,11 @@ import com.zq.vm.entity.ProductInformation;
 import com.zq.vm.service.ProductInformationService;
 import com.zq.vm.repository.specification.ProductInformationSpecification;
 
+import java.util.List;
+
 /**
- * 描述:余额信息业务实现 
- * Time: 2019-02-24 18:53:33
+ * 描述:商品信息业务实现 
+ * Time: 2019-04-13 14:55:42
  * @author: zou.qian
  * @version 1.0
  */
@@ -40,5 +42,10 @@ public class ProductInformationServiceImpl extends BaseServiceImpl<ProductInform
     @Override
     public Page<ProductInformation> findPageByCriteria(int pageNumber, int pageSize, final ProductInformation productInformation) {
     	return productInformationRepository.findAll(ProductInformationSpecification.specification(productInformation), buildPageRequest(pageNumber, pageSize));
+    }
+
+    @Override
+    public List<ProductInformation> findAll() {
+        return super.findList(productInformationRepository.findAll());
     }
 }

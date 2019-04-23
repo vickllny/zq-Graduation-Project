@@ -1,14 +1,19 @@
 package com.zq.vm.entity;
 
-import org.springframework.format.annotation.DateTimeFormat;
-
 import javax.persistence.*;
+
 import java.math.BigDecimal;
 import java.util.Date;
 
+import org.hibernate.annotations.GenericGenerator;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+
+import org.springframework.format.annotation.DateTimeFormat;
+
 /**
- * 描述: 余额信息实体类
- * Time: 2019-02-24 18:48:13
+ * 描述: 服务次数充值记录表实体类
+ * Time: 2019-04-17 23:37:10
  * @author: zou.qian
  * @version 1.0
  */
@@ -19,7 +24,8 @@ public class NumbersRechargeRecord{
 	 * 主键
 	 */
 	@Id
-    @GeneratedValue(strategy= GenerationType.IDENTITY)
+	@GenericGenerator(name="idGenerator", strategy="uuid")
+	@GeneratedValue(generator="idGenerator")
 	private String id;
 	/**
 	 * 会员ID
@@ -34,6 +40,7 @@ public class NumbersRechargeRecord{
 	/**
 	 * 充值时间
 	 */
+	@JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd HH:mm:ss")
 	@DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
 	@Column(name="recharge_time",length = 19, nullable = true)
 	private Date rechargeTime;
@@ -47,6 +54,11 @@ public class NumbersRechargeRecord{
 	 */
 	@Column(name="spend_balance",length = 10, nullable = true)
 	private BigDecimal spendBalance;
+	/**
+	 * 数量
+	 */
+	@Column(name="createUserId")
+	private String createUserId;
 	
 	/**
 	 * 获取主键
@@ -125,5 +137,11 @@ public class NumbersRechargeRecord{
 	*/
 	public void setSpendBalance(BigDecimal spendBalance){
 		this.spendBalance=spendBalance;
+	}
+	public String getCreateUserId() {
+		return createUserId;
+	}
+	public void setCreateUserId(String createUserId) {
+		this.createUserId = createUserId;
 	}
 }

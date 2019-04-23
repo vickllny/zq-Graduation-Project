@@ -1,14 +1,17 @@
 package com.zq.vm.entity;
 
-import org.springframework.format.annotation.DateTimeFormat;
-
 import javax.persistence.*;
+
 import java.math.BigDecimal;
 import java.util.Date;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import org.hibernate.annotations.GenericGenerator;
+import org.springframework.format.annotation.DateTimeFormat;
+
 /**
- * 描述: 余额信息实体类
- * Time: 2019-02-24 18:39:13
+ * 描述: 余额充值记录实体类
+ * Time: 2019-03-23 13:44:04
  * @author: zou.qian
  * @version 1.0
  */
@@ -19,7 +22,8 @@ public class AmountSpendRecord{
 	 * 主键
 	 */
 	@Id
-    @GeneratedValue(strategy= GenerationType.IDENTITY)
+	@GenericGenerator(name="idGenerator", strategy="uuid")
+	@GeneratedValue(generator="idGenerator")
 	private String id;
 	/**
 	 * 会员id
@@ -39,9 +43,20 @@ public class AmountSpendRecord{
 	/**
 	 * 消费时间
 	 */
+	@JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd HH:mm:ss")
 	@DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
 	@Column(name="spend_time",length = 19, nullable = true)
 	private Date spendTime;
+	/**
+	 * 数量
+	 */
+	@Column(name="count")
+	private Integer count;
+	/**
+	 * 数量
+	 */
+	@Column(name="createUserId")
+	private String createUserId;
 	
 	/**
 	 * 获取主键
@@ -107,5 +122,17 @@ public class AmountSpendRecord{
 	*/
 	public void setSpendTime(Date spendTime){
 		this.spendTime=spendTime;
+	}
+	public Integer getCount() {
+		return count;
+	}
+	public void setCount(Integer count) {
+		this.count = count;
+	}
+	public String getCreateUserId() {
+		return createUserId;
+	}
+	public void setCreateUserId(String createUserId) {
+		this.createUserId = createUserId;
 	}
 }

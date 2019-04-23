@@ -6,6 +6,7 @@ import java.util.List;
 /**
  * layui 表格分页对象
  */
+@SuppressWarnings("serial")
 public class Pager implements Serializable {
     private int code = 0;
     private String msg ;

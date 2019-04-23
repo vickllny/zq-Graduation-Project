@@ -1,6 +1,9 @@
 package com.zq.vm.service;
 
 import com.zq.vm.entity.SetMealInformationProduct;
+import com.zq.vm.entity.vo.SetMealInformationProductVo;
+
+import java.util.List;
 
 import org.springframework.data.domain.Page;
 
@@ -41,5 +44,25 @@ public interface SetMealInformationProductService{
     * @return
     */
 	SetMealInformationProduct findOne(String id);
+
+	/**
+	 * 根据套餐id删除
+	 * @param id
+	 */
+	void deleteBySetMealInformationId(String id);
+
+	/**
+	 * 根据套餐id查询选择的商品
+	 * @param id
+	 * @return
+	 */
+	List<SetMealInformationProductVo> findVoBySetMealInforamtionId(String id);
+
+	/**
+	 * 根据套餐id查询选择的商品
+	 * @param setMealId
+	 * @return
+	 */
+	List<SetMealInformationProduct> findBySetMealInforamtionId(String setMealInformationId);
 
 }

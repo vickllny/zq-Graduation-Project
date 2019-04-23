@@ -1,12 +1,14 @@
 package com.zq.vm.service;
 
-
 import com.zq.vm.entity.Customer;
+
 import org.springframework.data.domain.Page;
 
+import java.util.List;
+
 /**
- * 描述: 会员信息业务接口
- * Time: 2019-02-24 14:58:24
+ * 描述: 会员业务接口
+ * Time: 2019-03-25 14:23:23
  * @author: zou.qian
  * @version 1.0
  */
@@ -42,4 +44,16 @@ public interface CustomerService{
     */
 	Customer findOne(String id);
 
+    /**
+     * 查询所有
+     * @return
+     */
+    List<Customer> findAll();
+
+    /**
+     * 查询指定状态的会员
+     * @param flag
+     * @return
+     */
+	List<Customer> findCustomersByStatus(int flag);
 }

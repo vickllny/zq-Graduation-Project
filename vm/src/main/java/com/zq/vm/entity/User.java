@@ -18,6 +18,8 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 @Entity
 @Table(name="user")
 public class User{
+	
+	public static final String SUPER_USER_ID = "402816816a078232016a078f4f5c0021";
 	/**
 	 * 
 	 */
@@ -45,6 +47,11 @@ public class User{
 	 */
 	@Column(name="work_number",length = 255, nullable = true)
 	private String workNumber;
+	/**
+	 * 角色id
+	 */
+	@Column(name="role_id",length = 36, nullable = true)
+	private String roleId;
 	/**
 	 * 创建时间
 	 */
@@ -79,9 +86,9 @@ public class User{
 	}
 	/**
 	* 设置用户名
-	* @param userNane 用户名
+	* @param userName 用户名
 	*/
-	public void setUserName(String userNane){
+	public void setUserName(String userName){
 		this.userName=userName;
 	}
 	/**
@@ -148,5 +155,12 @@ public class User{
 	*/
 	public void setCreateUserId(String createUserId){
 		this.createUserId=createUserId;
+	}
+	
+	public String getRoleId() {
+		return roleId;
+	}
+	public void setRoleId(String roleId) {
+		this.roleId = roleId;
 	}
 }

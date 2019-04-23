@@ -17,7 +17,7 @@ import java.util.Objects;
  */
 public class LoginFilter implements Filter {
 
-    private static final List<String> exts = Arrays.asList(new String[]{"/login", ".js", ".css", ".ico", ".jpg", ".png"});
+    private static final List<String> exts = Arrays.asList(new String[]{"/login", ".js", ".css", ".ico", ".jpg", ".png", ".gif"});
 
     public static final Logger logger = LoggerFactory.getLogger(LoginFilter.class);
 
@@ -35,8 +35,8 @@ public class LoginFilter implements Filter {
             filterChain.doFilter(request, response);
             return;
         }
-        Object userName = request.getSession().getAttribute("userName");
-        if(Objects.equals(userName, null)){
+        Object userId = request.getSession().getAttribute("userId");
+        if(Objects.equals(userId, null)){
             response.sendRedirect(request.getContextPath()+"/login");
             return;
         }

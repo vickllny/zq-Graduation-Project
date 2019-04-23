@@ -4,9 +4,11 @@ import com.zq.vm.entity.Balance;
 
 import org.springframework.data.domain.Page;
 
+import java.util.List;
+
 /**
- * 描述: 余额信息业务接口
- * Time: 2019-02-24 18:26:07
+ * 描述: 余额业务接口
+ * Time: 2019-03-25 13:45:13
  * @author: zou.qian
  * @version 1.0
  */
@@ -42,4 +44,25 @@ public interface BalanceService{
     */
 	Balance findOne(String id);
 
+    /**
+     * 查询所有
+     * @return
+     */
+    List<Balance> findAll();
+
+    /**
+     * 根据customerId查询
+     * @param customerId
+     * @return
+     */
+	Balance findByCustomerId(String customerId);
+
+	/**
+	 * 
+	 * @param pageNumber
+	 * @param pageSize
+	 * @param customerName
+	 * @return
+	 */
+	Page<Balance> findPageByCriteria(Integer pageNumber, Integer pageSize, String customerName);
 }

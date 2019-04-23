@@ -16,7 +16,7 @@ var AjaxUtil = {
 	 * @param errorCallback
 	 * @returns
 	 */
-	syncPost : function(url,callback,data,errorCallback){
+	syncPost : function(url,data,callback,errorCallback){
 		$.ajax({
 			url : url,
 			type : 'post',

@@ -1,12 +1,15 @@
 package com.zq.vm.service;
 
 import com.zq.vm.entity.SetMealInformation;
+import com.zq.vm.entity.vo.SetMealInformationVo;
 
 import org.springframework.data.domain.Page;
 
+import java.util.List;
+
 /**
- * 描述: 余额信息业务接口
- * Time: 2019-02-24 19:05:19
+ * 描述: 套餐管理业务接口
+ * Time: 2019-03-25 22:25:50
  * @author: zou.qian
  * @version 1.0
  */
@@ -42,4 +45,15 @@ public interface SetMealInformationService{
     */
 	SetMealInformation findOne(String id);
 
+    /**
+     * 查询所有
+     * @return
+     */
+    List<SetMealInformation> findAll();
+
+    /**
+     * 保存套餐的商品
+     * @param vo
+     */
+	void saveProduct(SetMealInformationVo vo);
 }

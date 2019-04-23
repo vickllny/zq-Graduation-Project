@@ -6,7 +6,7 @@ import javax.persistence.*;
 import java.util.Date;
 
 /**
- * 描述: 余额信息实体类
+ * 描述: 库存入库实体类
  * Time: 2019-02-24 19:00:38
  * @author: zou.qian
  * @version 1.0

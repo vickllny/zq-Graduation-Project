@@ -10,9 +10,11 @@ import com.zq.vm.entity.Customer;
 import com.zq.vm.service.CustomerService;
 import com.zq.vm.repository.specification.CustomerSpecification;
 
+import java.util.List;
+
 /**
- * 描述:会员信息业务实现 
- * Time: 2019-02-24 14:58:24
+ * 描述:会员业务实现 
+ * Time: 2019-03-25 14:23:23
  * @author: zou.qian
  * @version 1.0
  */
@@ -41,4 +43,14 @@ public class CustomerServiceImpl extends BaseServiceImpl<Customer, String> imple
     public Page<Customer> findPageByCriteria(int pageNumber, int pageSize, final Customer customer) {
     	return customerRepository.findAll(CustomerSpecification.specification(customer), buildPageRequest(pageNumber, pageSize));
     }
+
+    @Override
+    public List<Customer> findAll() {
+        return super.findList(customerRepository.findAll());
+    }
+
+	@Override
+	public List<Customer> findCustomersByStatus(int flag) {
+		return customerRepository.findAll(CustomerSpecification.statusSpecification(flag));
+	}
 }

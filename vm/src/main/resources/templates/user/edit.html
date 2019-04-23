@@ -22,7 +22,7 @@
             <div class="layui-form-item">
                 <label class="layui-form-label">用户名</label>
                 <div class="layui-input-block">
-                    <input type="text" name="userNane" th:value="${bean?.userNane}" lay-verify="required" autocomplete="off" placeholder="用户名" class="layui-input">
+                    <input type="text" name="userName" th:value="${bean?.userName}" lay-verify="required" autocomplete="off" placeholder="用户名" class="layui-input">
                 </div>
             </div>
             <div class="layui-form-item">
@@ -46,7 +46,7 @@
         </div>
         <div class="f-layout-b-btn">
             <button class="layui-btn layui-btn-normal" type="button" lay-submit lay-filter="save">保存</button>
-            <button class="layui-btn layui-btn-primary" type="button" onclick="closeCruuentIframe()">取消</button>
+            <button class="layui-btn layui-btn-primary" type="button" onclick="closeCurrentIframe()">取消</button>
         </div>
     </form>
 </div>
@@ -82,7 +82,7 @@
                         layer.alert(json.message,function(){
                             if(json && json.status == 'success'){
                                 parent.table1.reload();
-                                closeCruuentIframe();
+                                closeCurrentIframe();
                             }
                         });
                     }

@@ -31,7 +31,7 @@
         </div>
         <div class="f-layout-b-btn">
             <button class="layui-btn layui-btn-normal" type="button" lay-submit lay-filter="save">保存</button>
-            <button class="layui-btn layui-btn-primary" type="button" onclick="closeCruuentIframe()">取消</button>
+            <button class="layui-btn layui-btn-primary" type="button" onclick="closeCurrentIframe()">取消</button>
         </div>
     </form>
 </div>
@@ -64,11 +64,12 @@
                     async : false,
                     data : data,
                     success : function (json) {
-                        layer.alert(json.message,function(){
+                        layer.alert(json.message,function(index){
                             if(json && json.status == 'success'){
                                 parent.table1.reload();
-                                closeCruuentIframe();
+                                closeCurrentIframe();
                             }
+                            layer.close(index);
                         });
                     }
                 })

@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.zq.vm.entity.Menu;
+import com.zq.vm.entity.User;
 import com.zq.vm.service.MenuService;
 import com.zq.vm.repository.specification.MenuSpecification;
 
@@ -66,5 +67,13 @@ public class MenuServiceImpl extends BaseServiceImpl<Menu, String> implements Me
 	@Override
 	public List<Menu> findByPid(String id) {
 		return menuRepository.findByPid(id);
+	}
+
+	@Override
+	public List<Menu> findMenuByUserId(String userId) {
+		if(userId.equals(User.SUPER_USER_ID)) {
+			return findAll();
+		}
+		return menuRepository.findMenuByUserId(userId);
 	}
 }

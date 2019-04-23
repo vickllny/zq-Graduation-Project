@@ -5,11 +5,12 @@ import org.springframework.data.jpa.domain.Specification;
 
 import javax.persistence.criteria.Predicate;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
+import java.util.Date;
+import java.util.Optional;
 
 /**
- * 余额信息条件查询
+ * 套餐管理条件查询
  */
 public class SetMealInformationSpecification {
 
@@ -21,9 +22,9 @@ public class SetMealInformationSpecification {
     public static Specification<SetMealInformation> specification(final SetMealInformation setMealInformation){
     	return (root, criteriaQuery, criteriaBuilder) -> {
 			List<Predicate> predicates = new ArrayList<>();
-			predicates.add(criteriaBuilder.equal(root.get("name").as(String.class), setMealInformation.getName()));
-			predicates.add(criteriaBuilder.equal(root.get("mealTimelimit").as(Date.class), setMealInformation.getMealTimelimit()));
-			predicates.add(criteriaBuilder.equal(root.get("isUse").as(Integer.class), setMealInformation.getIsUse()));
+            Optional.ofNullable(setMealInformation.getName()).ifPresent(name -> predicates.add(criteriaBuilder.equal(root.get("name").as(String.class), name)));
+            Optional.ofNullable(setMealInformation.getMealTimelimit()).ifPresent(mealTimelimit -> predicates.add(criteriaBuilder.equal(root.get("mealTimelimit").as(Date.class), mealTimelimit)));
+            Optional.ofNullable(setMealInformation.getIsUse()).ifPresent(isUse -> predicates.add(criteriaBuilder.equal(root.get("isUse").as(String.class), isUse)));
 			return criteriaQuery.where(criteriaBuilder.and(predicates.toArray(new Predicate[predicates.size()]))).getRestriction();
         };
 	}

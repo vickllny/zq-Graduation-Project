@@ -5,11 +5,12 @@ import org.springframework.data.jpa.domain.Specification;
 
 import javax.persistence.criteria.Predicate;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
+import java.util.Date;
+import java.util.Optional;
 
 /**
- * 余额信息条件查询
+ * 服务次数消费记录表条件查询
  */
 public class NumbersSpendRecordSpecification {
 
@@ -21,10 +22,10 @@ public class NumbersSpendRecordSpecification {
     public static Specification<NumbersSpendRecord> specification(final NumbersSpendRecord numbersSpendRecord){
     	return (root, criteriaQuery, criteriaBuilder) -> {
 			List<Predicate> predicates = new ArrayList<>();
-			predicates.add(criteriaBuilder.equal(root.get("customerId").as(String.class), numbersSpendRecord.getCustomerId()));
-			predicates.add(criteriaBuilder.equal(root.get("spendNumbers").as(Integer.class), numbersSpendRecord.getSpendNumbers()));
-			predicates.add(criteriaBuilder.equal(root.get("spendTime").as(Date.class), numbersSpendRecord.getSpendTime()));
-			predicates.add(criteriaBuilder.equal(root.get("serviceId").as(String.class), numbersSpendRecord.getServiceId()));
+            Optional.ofNullable(numbersSpendRecord.getCustomerId()).ifPresent(customerId -> predicates.add(criteriaBuilder.equal(root.get("customerId").as(String.class), customerId)));
+            Optional.ofNullable(numbersSpendRecord.getSpendNumbers()).ifPresent(spendNumbers -> predicates.add(criteriaBuilder.equal(root.get("spendNumbers").as(String.class), spendNumbers)));
+            Optional.ofNullable(numbersSpendRecord.getSpendTime()).ifPresent(spendTime -> predicates.add(criteriaBuilder.equal(root.get("spendTime").as(Date.class), spendTime)));
+            Optional.ofNullable(numbersSpendRecord.getServiceId()).ifPresent(serviceId -> predicates.add(criteriaBuilder.equal(root.get("serviceId").as(String.class), serviceId)));
 			return criteriaQuery.where(criteriaBuilder.and(predicates.toArray(new Predicate[predicates.size()]))).getRestriction();
         };
 	}

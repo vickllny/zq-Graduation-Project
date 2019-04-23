@@ -10,9 +10,11 @@ import com.zq.vm.entity.ServiceInformation;
 import com.zq.vm.service.ServiceInformationService;
 import com.zq.vm.repository.specification.ServiceInformationSpecification;
 
+import java.util.List;
+
 /**
- * 描述:余额信息业务实现 
- * Time: 2019-02-24 19:02:59
+ * 描述:服务信息表(商品)业务实现 
+ * Time: 2019-04-16 23:18:35
  * @author: zou.qian
  * @version 1.0
  */
@@ -40,5 +42,10 @@ public class ServiceInformationServiceImpl extends BaseServiceImpl<ServiceInform
     @Override
     public Page<ServiceInformation> findPageByCriteria(int pageNumber, int pageSize, final ServiceInformation serviceInformation) {
     	return serviceInformationRepository.findAll(ServiceInformationSpecification.specification(serviceInformation), buildPageRequest(pageNumber, pageSize));
+    }
+
+    @Override
+    public List<ServiceInformation> findAll() {
+        return super.findList(serviceInformationRepository.findAll());
     }
 }

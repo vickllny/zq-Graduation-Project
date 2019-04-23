@@ -1,13 +1,18 @@
 package com.zq.vm.entity;
 
-import org.springframework.format.annotation.DateTimeFormat;
-
 import javax.persistence.*;
+
 import java.util.Date;
 
+import org.hibernate.annotations.GenericGenerator;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+
+import org.springframework.format.annotation.DateTimeFormat;
+
 /**
- * 描述: 余额信息实体类
- * Time: 2019-02-24 18:51:14
+ * 描述: 服务次数消费记录表实体类
+ * Time: 2019-04-20 20:55:46
  * @author: zou.qian
  * @version 1.0
  */
@@ -18,7 +23,8 @@ public class NumbersSpendRecord{
 	 * 主键
 	 */
 	@Id
-    @GeneratedValue(strategy= GenerationType.IDENTITY)
+	@GenericGenerator(name="idGenerator", strategy="uuid")
+	@GeneratedValue(generator="idGenerator")
 	private String id;
 	/**
 	 * 会员ID
@@ -33,6 +39,7 @@ public class NumbersSpendRecord{
 	/**
 	 * 消费时间
 	 */
+	@JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd HH:mm:ss")
 	@DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
 	@Column(name="spend_time",length = 19, nullable = true)
 	private Date spendTime;

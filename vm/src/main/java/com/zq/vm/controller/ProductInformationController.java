@@ -1,29 +1,32 @@
 package com.zq.vm.controller;
 
-import com.zq.vm.entity.ResultJson;
+import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import org.springframework.beans.factory.annotation.Autowired;
-
+import com.zq.vm.entity.ResultJson;
 import com.zq.vm.entity.ProductInformation;
 import com.zq.vm.service.ProductInformationService;
+import com.zq.vm.utils.Pager;
 
 /**
- * 描述: 余额信息控制器 
- * Time: 2019-02-24 18:53:33
+ * 描述: 商品信息控制器 
+ * Time: 2019-04-13 14:55:42
  * @author: zou.qian
  * @version 1.0
  */
 @Controller
-@RequestMapping(value = "productInformation")
 public class ProductInformationController {
 
-   @Autowired
+    @Autowired
     private ProductInformationService productInformationService;
 
     /**
@@ -32,7 +35,7 @@ public class ProductInformationController {
      * @return
      */
     @ResponseBody
-    @RequestMapping(value = "/{id}",method = RequestMethod.GET)
+    @RequestMapping(value = "/productInformation/{id}",method = RequestMethod.GET)
     public ProductInformation productInformation(@PathVariable(value = "id") String id){
         return productInformationService.findOne(id);
     }
@@ -44,7 +47,7 @@ public class ProductInformationController {
      * @return
      */
     @ResponseBody
-    @RequestMapping(value = "/",method = RequestMethod.POST)
+    @RequestMapping(value = "/productInformation",method = RequestMethod.POST)
     public ResultJson save(ProductInformation productInformation){
         productInformationService.save(productInformation);
         return new ResultJson(ResultJson.SUCCESS,"操作成功！");
@@ -56,7 +59,7 @@ public class ProductInformationController {
      * @return
      */
     @ResponseBody
-    @RequestMapping(value = "/",method = RequestMethod.PUT)
+    @RequestMapping(value = "/productInformation",method = RequestMethod.PUT)
     public ResultJson update(ProductInformation productInformation){
         productInformationService.save(productInformation);
         return new ResultJson(ResultJson.SUCCESS,"操作成功！");
@@ -68,7 +71,7 @@ public class ProductInformationController {
      * @return
      */
     @ResponseBody
-    @RequestMapping(value = "/{id}",method = RequestMethod.DELETE)
+    @RequestMapping(value = "/productInformation/{id}",method = RequestMethod.DELETE)
     public ResultJson delete(@PathVariable(value = "id") String id){
         productInformationService.delete(id);
         return new ResultJson(ResultJson.SUCCESS,"操作成功！");
@@ -82,10 +85,39 @@ public class ProductInformationController {
      * @return
      */
     @ResponseBody
-    @RequestMapping(value = "/page/{pageNumber}/{pageSize}",method = RequestMethod.POST)
-    public ResultJson page(@PathVariable(value = "pageNumber") Integer pageNumber,@PathVariable(value = "pageSize") Integer pageSize,ProductInformation productInformation){
+    @RequestMapping(value = "/productInformation/page",method = RequestMethod.POST)
+    public Pager page(@RequestParam(value = "pageNumber",defaultValue = "1") Integer pageNumber, @RequestParam(value = "pageSize",defaultValue = "10") Integer pageSize, ProductInformation productInformation){
         Page<ProductInformation> page = productInformationService.findPageByCriteria(pageNumber, pageSize, productInformation);
-    	return new ResultJson(ResultJson.SUCCESS,"操作成功！", page);
+        return new Pager(page.getContent(), page.getTotalElements());
     }
 
+    /**
+     * 商品信息列表页面
+     * @param model
+     * @return
+     */
+    @RequestMapping(value = "/productInformation/list")
+    public String list(final Model model){
+        return "productInformation/list";
+    }
+
+   /**
+     * 新增页面
+     * @return
+     */
+    @RequestMapping(value = "/productInformation/add")
+    public String add(final Model model){
+        return "productInformation/edit";
+    }
+
+    /**
+     * 编辑页面
+     * @param id
+     * @return
+     */
+    @RequestMapping(value = "/productInformation/edit")
+    public String edit(final String id,final Model model){
+        Optional.ofNullable(productInformationService.findOne(id)).ifPresent(productInformation -> model.addAttribute("bean",productInformation));
+        return "productInformation/edit";
+    }
 }

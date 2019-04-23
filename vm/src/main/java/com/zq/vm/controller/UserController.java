@@ -100,7 +100,7 @@ public class UserController {
      */
     @RequestMapping(value = "/user/list")
     public String list(final Model model){
-        return "/user/list";
+        return "user/list";
     }
 
    /**
@@ -109,7 +109,7 @@ public class UserController {
      */
     @RequestMapping(value = "/user/add")
     public String add(final Model model){
-        return "/user/edit";
+        return "user/edit";
     }
 
     /**
@@ -120,6 +120,37 @@ public class UserController {
     @RequestMapping(value = "/user/edit")
     public String edit(final String id,final Model model){
         Optional.ofNullable(userService.findOne(id)).ifPresent(user -> model.addAttribute("bean",user));
-        return "/user/edit";
+        return "user/edit";
     }
+    
+    /**
+     * 分配角色页面
+     * @param model
+     * @param userId
+     * @return
+     */
+    @RequestMapping(value = "/user/roleList/{userId}")
+    public String roleList(final Model model,@PathVariable(value = "userId")final String userId) {
+    	model.addAttribute("userId", userId);
+    	return "user/roleList";
+    }
+    
+    /**
+     * 分配角色
+     * @param userId
+     * @param roleId
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "/user/saveUserRole")
+    public ResultJson saveUserRole(@RequestParam(value = "userId")final String userId,@RequestParam(value = "roleId")final String roleId) {
+    	User user = userService.findOne(userId);
+    	if(user == null) {
+    		return new ResultJson(ResultJson.ERROR, "用户不存在");
+    	}
+    	user.setRoleId(roleId);
+    	userService.save(user);
+    	return new ResultJson(ResultJson.SUCCESS, "操作成功"); 
+    }
+    
 }

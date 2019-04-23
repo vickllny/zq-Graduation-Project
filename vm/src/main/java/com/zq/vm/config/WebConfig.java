@@ -1,113 +1,23 @@
 package com.zq.vm.config;
 
-import com.zq.vm.config.interceptor.BaseInterceptor;
-import com.zq.vm.filter.LoginFilter;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.format.FormatterRegistry;
-import org.springframework.http.converter.HttpMessageConverter;
-import org.springframework.validation.MessageCodesResolver;
-import org.springframework.validation.Validator;
-import org.springframework.web.method.support.HandlerMethodArgumentResolver;
-import org.springframework.web.method.support.HandlerMethodReturnValueHandler;
-import org.springframework.web.servlet.HandlerExceptionResolver;
-import org.springframework.web.servlet.config.annotation.*;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.thymeleaf.spring5.context.SpringContextUtils;
 
-import javax.servlet.FilterRegistration;
-import java.util.List;
+import com.zq.vm.config.interceptor.BaseInterceptor;
+import com.zq.vm.filter.LoginFilter;
+import com.zq.vm.filter.XssFilter;
+import com.zq.vm.utils.SpringContextUtil;
 
 @Configuration
 public class WebConfig implements WebMvcConfigurer {
 
     @Override
-    public void configurePathMatch(PathMatchConfigurer configurer) {
-
-    }
-
-    @Override
-    public void configureContentNegotiation(ContentNegotiationConfigurer configurer) {
-
-    }
-
-    @Override
-    public void configureAsyncSupport(AsyncSupportConfigurer configurer) {
-
-    }
-
-    @Override
-    public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {
-
-    }
-
-    @Override
-    public void addFormatters(FormatterRegistry registry) {
-
-    }
-
-    @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(new BaseInterceptor()).addPathPatterns("/**");
-    }
-
-    @Override
-    public void addResourceHandlers(ResourceHandlerRegistry registry) {
-
-    }
-
-    @Override
-    public void addCorsMappings(CorsRegistry registry) {
-
-    }
-
-    @Override
-    public void addViewControllers(ViewControllerRegistry registry) {
-
-    }
-
-    @Override
-    public void configureViewResolvers(ViewResolverRegistry registry) {
-
-    }
-
-    @Override
-    public void addArgumentResolvers(List<HandlerMethodArgumentResolver> resolvers) {
-
-    }
-
-    @Override
-    public void addReturnValueHandlers(List<HandlerMethodReturnValueHandler> handlers) {
-
-    }
-
-    @Override
-    public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
-
-    }
-
-    @Override
-    public void extendMessageConverters(List<HttpMessageConverter<?>> converters) {
-
-    }
-
-    @Override
-    public void configureHandlerExceptionResolvers(List<HandlerExceptionResolver> resolvers) {
-
-    }
-
-    @Override
-    public void extendHandlerExceptionResolvers(List<HandlerExceptionResolver> resolvers) {
-
-    }
-
-    @Override
-    public Validator getValidator() {
-        return null;
-    }
-
-    @Override
-    public MessageCodesResolver getMessageCodesResolver() {
-        return null;
     }
 
     /**
@@ -115,10 +25,25 @@ public class WebConfig implements WebMvcConfigurer {
      * @return
      */
     @Bean
-    public FilterRegistrationBean loginFilter() {
-        FilterRegistrationBean bean = new FilterRegistrationBean();
+    public FilterRegistrationBean<LoginFilter> loginFilter() {
+        FilterRegistrationBean<LoginFilter> bean = new FilterRegistrationBean<LoginFilter>();
         bean.setFilter(new LoginFilter());
+        bean.setOrder(1);
         bean.addUrlPatterns("/*");
         return bean;
     }
+    
+    /**
+     * xssFilter
+     * @return
+     */
+    @Bean
+    public FilterRegistrationBean<XssFilter> xssFilter() {
+        FilterRegistrationBean<XssFilter> bean = new FilterRegistrationBean<XssFilter>();
+        bean.setFilter(new XssFilter());
+        bean.setOrder(2);
+        bean.addUrlPatterns("/*");
+        return bean;
+    }
+    
 }

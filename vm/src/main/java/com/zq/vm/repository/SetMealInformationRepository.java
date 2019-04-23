@@ -5,8 +5,8 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.repository.PagingAndSortingRepository;
 
 /**
- * 描述: 余额信息业务数据访问类
- * Time: 2019-02-24 19:05:19
+ * 描述: 套餐管理业务数据访问类
+ * Time: 2019-03-25 22:25:50
  * @author: zou.qian
  * @version 1.0
  */

@@ -1,15 +1,17 @@
 package com.zq.vm.repository.specification;
 
-import  com.zq.vm.entity.ProductInformation;
-import org.springframework.data.jpa.domain.Specification;
-
-import javax.persistence.criteria.Predicate;
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+
+import javax.persistence.criteria.Predicate;
+
+import org.springframework.data.jpa.domain.Specification;
+
+import  com.zq.vm.entity.ProductInformation;
 
 /**
- * 余额信息条件查询
+ * 商品信息条件查询
  */
 public class ProductInformationSpecification {
 
@@ -21,9 +23,10 @@ public class ProductInformationSpecification {
     public static Specification<ProductInformation> specification(final ProductInformation productInformation){
     	return (root, criteriaQuery, criteriaBuilder) -> {
 			List<Predicate> predicates = new ArrayList<>();
-			predicates.add(criteriaBuilder.equal(root.get("productId").as(String.class), productInformation.getProductId()));
-			predicates.add(criteriaBuilder.equal(root.get("purchasePrice").as(BigDecimal.class), productInformation.getPurchasePrice()));
-			predicates.add(criteriaBuilder.equal(root.get("sellingPrice").as(BigDecimal.class), productInformation.getSellingPrice()));
+            Optional.ofNullable(productInformation.getName()).ifPresent(name -> predicates.add(criteriaBuilder.like(root.get("name").as(String.class), "%"+name+"%")));
+            Optional.ofNullable(productInformation.getPurchasePrice()).ifPresent(purchasePrice -> predicates.add(criteriaBuilder.equal(root.get("purchasePrice").as(String.class), purchasePrice)));
+            Optional.ofNullable(productInformation.getSellingPrice()).ifPresent(sellingPrice -> predicates.add(criteriaBuilder.equal(root.get("sellingPrice").as(String.class), sellingPrice)));
+            Optional.ofNullable(productInformation.getUnit()).ifPresent(unit -> predicates.add(criteriaBuilder.equal(root.get("unit").as(String.class), unit)));
 			return criteriaQuery.where(criteriaBuilder.and(predicates.toArray(new Predicate[predicates.size()]))).getRestriction();
         };
 	}

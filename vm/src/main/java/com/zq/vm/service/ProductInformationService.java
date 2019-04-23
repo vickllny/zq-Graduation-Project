@@ -4,9 +4,11 @@ import com.zq.vm.entity.ProductInformation;
 
 import org.springframework.data.domain.Page;
 
+import java.util.List;
+
 /**
- * 描述: 余额信息业务接口
- * Time: 2019-02-24 18:53:33
+ * 描述: 商品信息业务接口
+ * Time: 2019-04-13 14:55:42
  * @author: zou.qian
  * @version 1.0
  */
@@ -42,4 +44,9 @@ public interface ProductInformationService{
     */
 	ProductInformation findOne(String id);
 
+    /**
+     * 查询所有
+     * @return
+     */
+    List<ProductInformation> findAll();
 }

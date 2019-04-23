@@ -4,9 +4,11 @@ import com.zq.vm.entity.ServiceInformation;
 
 import org.springframework.data.domain.Page;
 
+import java.util.List;
+
 /**
- * 描述: 余额信息业务接口
- * Time: 2019-02-24 19:02:59
+ * 描述: 服务信息表(商品)业务接口
+ * Time: 2019-04-16 23:18:35
  * @author: zou.qian
  * @version 1.0
  */
@@ -42,4 +44,9 @@ public interface ServiceInformationService{
     */
 	ServiceInformation findOne(String id);
 
+    /**
+     * 查询所有
+     * @return
+     */
+    List<ServiceInformation> findAll();
 }

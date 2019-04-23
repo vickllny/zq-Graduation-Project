@@ -6,9 +6,9 @@ spring:
   datasource:
     druid:
       driver-class-name: com.mysql.cj.jdbc.Driver
-      url: jdbc:mysql://127.0.0.1:3306/yb_carb?useUnicode=true&characterEncoding=UTF-8
+      url: jdbc:mysql://127.0.0.1:3306/yb_carb?serverTimezone=GMT%2B8&useUnicode=true&characterEncoding=UTF-8
       username: root
-      password: wisesoft
+      password: 123456
       initial-size: 5
       max-active: 100
       max-wait: 20
@@ -20,3 +20,7 @@ spring:
     cache: false
   jpa:
     show-sql: true
+logging:
+  level:
+    org.springframework: warn
+    com.zq.vm: debug

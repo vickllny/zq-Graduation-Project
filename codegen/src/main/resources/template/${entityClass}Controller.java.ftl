@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.zq.vm.entity.ResultJson;
 import ${package}.entity.${entityClass};
 import ${package}.service.${entityClass}Service;
+import com.zq.vm.utils.Pager;
 
 /**
  * 描述: ${logicName}控制器 

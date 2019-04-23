@@ -3,6 +3,7 @@ package com.zq.codegen;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -75,7 +76,7 @@ public class Table {
 	/**
 	 * 注释
 	 */
-	private Map<String,String> comments=Collections.emptyMap();
+	private Map<String,String> comments= new HashMap<>();
 	/**
 	 * 时间
 	 */
@@ -117,6 +118,10 @@ public class Table {
 	 * 树
 	 */
 	private Tree tree = new Tree();
+	/**
+	 * vo除了实体之外额外的字段
+	 */
+	private List<VoField> voFields = new ArrayList<>();
 	
 	
 	public String getSearchKey() {
@@ -474,12 +479,17 @@ public class Table {
 		this.treeDicCode = treeDicCode;
 	}
 
-	
-	
-	
-	
-	
+	public List<VoField> getVoFields() {
+		return voFields;
+	}
 
+	public void setVoFields(List<VoField> voFields) {
+		this.voFields = voFields;
+	}
 	
+	public Table addVoField(String type,String field,String comment) {
+		this.voFields.add(new VoField(type, field, comment));
+		return this;
+	}
 
 }

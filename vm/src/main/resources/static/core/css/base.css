@@ -9,6 +9,7 @@
     clear: both;
     display: block;
     width: 95%;
+    min-height: 80%;
 }
 .f-layout-b-btn {
     margin: 5px;

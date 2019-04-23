@@ -4,9 +4,11 @@ import com.zq.vm.entity.NumbersSpendRecord;
 
 import org.springframework.data.domain.Page;
 
+import java.util.List;
+
 /**
- * 描述: 余额信息业务接口
- * Time: 2019-02-24 18:51:14
+ * 描述: 服务次数消费记录表业务接口
+ * Time: 2019-04-20 20:55:46
  * @author: zou.qian
  * @version 1.0
  */
@@ -42,4 +44,15 @@ public interface NumbersSpendRecordService{
     */
 	NumbersSpendRecord findOne(String id);
 
+    /**
+     * 查询所有
+     * @return
+     */
+    List<NumbersSpendRecord> findAll();
+
+    /**
+     * 保存并扣除次数
+     * @param numbersSpendRecord
+     */
+	void saveAndDeductionNumbers(NumbersSpendRecord numbersSpendRecord);
 }

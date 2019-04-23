@@ -30,6 +30,7 @@
 <script type="text/html" id="operation">
     <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
     <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+	<a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="role">分配角色</a>
 </script>
 
 
@@ -48,11 +49,11 @@
 
         var tableWidth = $('#table1').parents('.tableBox').width();
         var cols = [
-               {field:'userNane', title:'用户名'},
+               {field:'userName', title:'用户名'},
                {field:'phoneNumber', title:'手机号码'},
                {field:'workNumber', title:'工号'},
                {field:'createTime', title:'创建时间'},
-       		   {field: 'operation', title:'操作', toolbar: '#operation'}
+       		   {field:'operation', title:'操作', toolbar: '#operation'}
    		]
         table1 = table.render({
             elem: '#table1',
@@ -99,7 +100,7 @@
                     fixed: false,
                     content: url
                 });
-            }else if(obj.event = 'delete'){
+            }else if(obj.event == 'del'){
                 var url = base + '/user/' + data.id;
                 layer.confirm('确认删除此条数据?', {icon: 2, title:'提示'}, function(index){
                     AjaxUtil.del(url,function(json){
@@ -109,6 +110,14 @@
                         }
                     });
                     layer.close(index);
+                });
+            }else if(obj.event == 'role'){
+            	var url = base + '/user/roleList/'+obj.data.id;
+                layer.open({
+                    type: 2,
+                    area: ['700px', '450px'],
+                    fixed: false,
+                    content: url
                 });
             }
         });

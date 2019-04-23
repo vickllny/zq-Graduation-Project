@@ -1,0 +1,134 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <title>余额</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" th:href="@{/layui/css/layui.css}">
+    <link rel="stylesheet" th:href="@{/ztree/css/zTreeStyle.css}" type="text/css">
+	<link rel="stylesheet" th:href="@{/core/css/style.css}" type="text/css">
+</head>
+<body>
+<div>
+    <div class="layui-row">
+        <div class="layui-col-md12">
+            <div class="layui-form-item searchBox">
+				<div class="layui-inline"><input type="text" name="customerName" placeholder="请输入会员名称" class="layui-input"></div>
+        		<button class="layui-btn layui-btn-sm" onclick="search()">搜索</button>
+            </div>
+            <div class="tableBox">
+                <table class="layui-hide" id="table1" lay-filter="table1"></table>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script type="text/html" id="toolbar">
+    <div class="layui-btn-container">
+        <button class="layui-btn layui-btn-sm" lay-event="add">新增</button>
+    </div>
+    <div class="layui-btn-container">
+		<div class="layui-inline"><input type="text" name="会员名称" class="layui-input"></div>
+        <button class="layui-btn layui-btn-sm" lay-event="search">搜索</button>
+    </div>
+</script>
+
+<script type="text/html" id="operation">
+    <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+</script>
+
+
+<script th:inline="javascript">
+    var base = [[${base}]];
+</script>
+<script type="text/javascript" th:src="@{/jquery/jquery-1.10.2.min.js}"></script>
+<script th:src="@{/layui/layui.js}" charset="utf-8"></script>
+<script th:src="@{/AjaxUtil.js}" charset="utf-8"></script>
+
+<script>
+    var table1 = null;
+    layui.use(['table'], function(){
+        var table = layui.table;
+
+        var cols = [
+            {field:'customerName', title:'会员'},
+            {field:'balance', title:'余额'},
+            //{field: 'operation', title:'操作', toolbar: '#operation'}
+        ]
+        table1 = table.render({
+            elem: '#table1',
+            url: base + '/balance/pageByCustomerName',
+            //toolbar: '#toolbar',
+            title: '余额表',
+            cellMinWidth: 200,
+            cols: [cols],
+            height: 'full-10',
+            page: true,
+            loading: true,
+            request: {
+                pageName: 'pageNumber',
+                limitName: 'pageSize',
+                customerName: ''
+            },
+            method: 'post'
+        });
+
+        //头工具栏事件
+        table.on('toolbar(table1)', function(obj){
+            switch(obj.event){
+                case 'add':
+                    var url = base + '/balance/add';
+                    layer.open({
+                        type: 2,
+                        title: '新增',
+                        area: ['650px', '450px'],
+                        offset: 'auto',
+                        shade: 0,
+                        content: url
+                    });
+                    break;
+            };
+        });
+
+        //监听行工具事件
+        table.on('tool(table1)', function(obj){
+            var data = obj.data;
+            if(obj.event === 'edit'){
+                //编辑
+                var url = base + '/balance/edit?id='+data.id;
+                layer.open({
+                    type: 2,
+                    area: ['700px', '450px'],
+                    fixed: false,
+                    content: url
+                });
+            }else if(obj.event == 'del'){
+                var url = base + '/balance/' + data.id;
+                layer.confirm('确认删除此条数据?', {icon: 2, title:'提示'}, function(index){
+                    AjaxUtil.del(url,function(json){
+                        layer.alert(json.message);
+                        if(json && json.status == 'success'){
+                            table1.reload();
+                        }
+                    });
+                    layer.close(index);
+                });
+            }
+        });
+    });
+    //搜索
+    function search(){
+    	table1.reload({
+    		where: {
+    			customerName:$("input[name='customerName']").val()
+    		}
+    	})
+    }
+</script>
+
+</body>
+</html>

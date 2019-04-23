@@ -1,7 +1,5 @@
 package com.zq.vm.entity;
 
-import java.util.List;
-
 public class ZTree {
 
     public static final String DEFAULT_PID = "#";
@@ -9,13 +7,19 @@ public class ZTree {
     private String id;
     private String name;
     private String pId;
-    private boolean isParent;
-    private List<ZTree> children;
+    private boolean checked;
 
     public ZTree(String id, String name, String pId) {
         this.id = id;
         this.name = name;
         this.pId = pId;
+    }
+    
+    public ZTree(String id, String name, String pId,boolean checked) {
+        this.id = id;
+        this.name = name;
+        this.pId = pId;
+        this.checked = checked;
     }
 
     public String getId() {
@@ -42,19 +46,11 @@ public class ZTree {
         this.pId = pId;
     }
 
-    public List<ZTree> getChildren() {
-        return children;
-    }
+	public boolean isChecked() {
+		return checked;
+	}
 
-    public void setChildren(List<ZTree> children) {
-        this.children = children;
-    }
-
-    public boolean isParent() {
-        return isParent;
-    }
-
-    public void setParent(boolean parent) {
-        isParent = parent;
-    }
+	public void setChecked(boolean checked) {
+		this.checked = checked;
+	}
 }

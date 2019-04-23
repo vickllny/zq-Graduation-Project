@@ -1,10 +1,16 @@
 package com.zq.vm.entity;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+import org.hibernate.annotations.GenericGenerator;
 
 /**
- * 描述: 余额信息实体类
- * Time: 2019-02-24 19:07:37
+ * 描述: 套餐商品信息表实体类
+ * Time: 2019-04-21 17:12:30
  * @author: zou.qian
  * @version 1.0
  */
@@ -15,7 +21,8 @@ public class SetMealInformationProduct{
 	 * 主键
 	 */
 	@Id
-    @GeneratedValue(strategy= GenerationType.IDENTITY)
+	@GenericGenerator(name="idGenerator", strategy="uuid")
+	@GeneratedValue(generator="idGenerator")
 	private String id;
 	/**
 	 * 套餐id
@@ -32,6 +39,11 @@ public class SetMealInformationProduct{
 	 */
 	@Column(name="count",length = 11, nullable = true)
 	private Integer count;
+	/**
+	 * 类别 1->商品  2->服务
+	 */
+	@Column(name="type",length = 3, nullable = true)
+	private String type;
 	
 	/**
 	 * 获取主键
@@ -84,5 +96,18 @@ public class SetMealInformationProduct{
 	*/
 	public void setCount(Integer count){
 		this.count=count;
+	}
+	/**
+	 * 获取类别 1->商品  2->服务
+	 */
+	public String getType(){
+		return type;
+	}
+	/**
+	* 设置类别 1->商品  2->服务
+	* @param type 类别 1->商品  2->服务
+	*/
+	public void setType(String type){
+		this.type=type;
 	}
 }

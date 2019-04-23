@@ -3,6 +3,8 @@ package com.zq.vm.controller;
 import java.util.List;
 import java.util.Optional;
 
+import javax.servlet.http.HttpSession;
+
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -117,7 +119,7 @@ public class MenuController {
      */
     @RequestMapping(value = "/menu/list")
     public String list(final Model model){
-        return "/menu/list";
+        return "menu/list";
     }
 
     /**
@@ -141,7 +143,7 @@ public class MenuController {
     		menu.setPid(var1);
     		model.addAttribute("bean", menu);
     	});
-        return "/menu/edit";
+        return "menu/edit";
     }
 
     /**
@@ -152,7 +154,7 @@ public class MenuController {
     @RequestMapping(value = "/menu/edit")
     public String edit(final String id,final Model model){
         Optional.ofNullable(menuService.findOne(id)).ifPresent(menu -> model.addAttribute("bean",menu));
-        return "/menu/edit";
+        return "menu/edit";
     }
     
     /**
@@ -161,7 +163,8 @@ public class MenuController {
      */
     @ResponseBody
     @RequestMapping(value = "/menu/userMenu")
-    public List<Menu> userMenu() {
-    	return menuService.findAll();
+    public List<Menu> userMenu(HttpSession session) {
+    	String userId = String.valueOf(session.getAttribute("userId"));
+    	return menuService.findMenuByUserId(userId);
     }
 }

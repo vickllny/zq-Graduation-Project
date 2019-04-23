@@ -3,6 +3,7 @@ package com.zq.vm.service.impl;
 import com.zq.vm.repository.UserRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -18,6 +19,7 @@ import com.zq.vm.repository.specification.UserSpecification;
  * @author: zou.qian
  * @version 1.0
  */
+@Transactional
 @Service
 public class UserServiceImpl extends BaseServiceImpl<User, String> implements UserService{
 

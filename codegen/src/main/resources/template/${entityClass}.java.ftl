@@ -4,6 +4,10 @@ import javax.persistence.*;
 
 import java.util.Date;
 
+import org.hibernate.annotations.GenericGenerator;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import org.springframework.format.annotation.DateTimeFormat;
 
 /**
@@ -26,6 +30,7 @@ public class ${entityClass}{
 	private ${list.javaType} ${list.fieldName};
 		<#else>
 			<#if list.javaType == 'Date'>
+	@JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd HH:mm:ss")
 	@DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
 	@Column(name="${list.dbName}",length = ${list.length}, nullable = ${list.nullable?string})
 	private ${list.javaType} ${list.fieldName};

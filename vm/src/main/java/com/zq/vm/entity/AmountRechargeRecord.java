@@ -1,14 +1,17 @@
 package com.zq.vm.entity;
 
-import org.springframework.format.annotation.DateTimeFormat;
-
 import javax.persistence.*;
+
 import java.math.BigDecimal;
 import java.util.Date;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import org.hibernate.annotations.GenericGenerator;
+import org.springframework.format.annotation.DateTimeFormat;
+
 /**
- * 描述: 余额信息实体类
- * Time: 2019-02-24 18:31:50
+ * 描述: 余额充值记录实体类
+ * Time: 2019-03-23 12:49:34
  * @author: zou.qian
  * @version 1.0
  */
@@ -19,7 +22,8 @@ public class AmountRechargeRecord{
 	 * 主键
 	 */
 	@Id
-    @GeneratedValue(strategy= GenerationType.IDENTITY)
+	@GenericGenerator(name="idGenerator", strategy="uuid")
+	@GeneratedValue(generator="idGenerator")
 	private String id;
 	/**
 	 * 会员id
@@ -29,15 +33,16 @@ public class AmountRechargeRecord{
 	/**
 	 * 充值金额
 	 */
-	@Column(name="recharge_amount",length = 32, nullable = true)
+	@Column(name="recharge_amount",length = 32,precision=3,nullable = true)
 	private BigDecimal rechargeAmount;
 	/**
 	 * 充值时间
 	 */
+	@JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd HH:mm:ss")
 	@DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
 	@Column(name="recharge_time",length = 19, nullable = true)
 	private Date rechargeTime;
-
+	
 	/**
 	 * 获取主键
 	 */

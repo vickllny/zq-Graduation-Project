@@ -22,6 +22,8 @@ public class UserSpecification {
     public static Specification<User> specification(final User user){
     	return (root, criteriaQuery, criteriaBuilder) -> {
 			List<Predicate> predicates = new ArrayList<>();
+			//排除查询出超级管理员
+			predicates.add(criteriaBuilder.notEqual(root.get("id").as(String.class), User.SUPER_USER_ID));
             Optional.ofNullable(user.getUserName()).ifPresent(userName -> predicates.add(criteriaBuilder.equal(root.get("userName").as(String.class), userName)));
             Optional.ofNullable(user.getPassword()).ifPresent(password -> predicates.add(criteriaBuilder.equal(root.get("password").as(String.class), password)));
             Optional.ofNullable(user.getPhoneNumber()).ifPresent(phoneNumber -> predicates.add(criteriaBuilder.equal(root.get("phoneNumber").as(String.class), phoneNumber)));
