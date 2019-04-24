@@ -1,5 +1,7 @@
 package com.zq.vm.entity;
 
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -7,6 +9,9 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.GenericGenerator;
+import org.springframework.format.annotation.DateTimeFormat;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 /**
  * 描述: 会员实体类
@@ -49,6 +54,13 @@ public class Customer{
 	 */
 	@Column(name="del",length = 3, nullable = true)
 	private Integer del;
+	/**
+	 * 创建时间
+	 */
+	@JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd HH:mm:ss")
+	@DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
+	@Column(name = "create_time")
+	private Date createTime;
 	/**
 	 * 获取主键
 	 */
@@ -119,5 +131,11 @@ public class Customer{
 	}
 	public void setDel(Integer del) {
 		this.del = del;
+	}
+	public Date getCreateTime() {
+		return createTime;
+	}
+	public void setCreateTime(Date createTime) {
+		this.createTime = createTime;
 	}
 }

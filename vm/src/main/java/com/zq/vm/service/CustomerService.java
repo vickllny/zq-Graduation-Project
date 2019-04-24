@@ -56,4 +56,13 @@ public interface CustomerService{
      * @return
      */
 	List<Customer> findCustomersByStatus(int flag);
+
+	/**
+	 * 跟选择的时间查询
+	 * @param pageNumber
+	 * @param pageSize
+	 * @param createTime
+	 * @return
+	 */
+	Page<Customer> findPageByCreateTime(Integer pageNumber, Integer pageSize, String createTime);
 }

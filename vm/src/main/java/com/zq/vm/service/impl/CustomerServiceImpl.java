@@ -3,7 +3,7 @@ package com.zq.vm.service.impl;
 import com.zq.vm.repository.CustomerRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
-
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.zq.vm.entity.Customer;
@@ -52,5 +52,15 @@ public class CustomerServiceImpl extends BaseServiceImpl<Customer, String> imple
 	@Override
 	public List<Customer> findCustomersByStatus(int flag) {
 		return customerRepository.findAll(CustomerSpecification.statusSpecification(flag));
+	}
+
+	@Override
+	public Page<Customer> findPageByCreateTime(Integer pageNumber, Integer pageSize, String createTime) {
+		if(StringUtils.isBlank(createTime)) {
+			return findPageByCriteria(pageNumber, pageSize, new Customer());
+		}
+		String startTime = createTime + "-1 00:00:00";
+		String endTime = createTime + "-31 00:00:00";
+		return customerRepository.findPageByCreateTimeBetween(startTime, endTime, buildPageRequest(pageNumber, pageSize));
 	}
 }

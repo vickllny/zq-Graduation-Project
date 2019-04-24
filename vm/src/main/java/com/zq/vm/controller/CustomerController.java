@@ -1,5 +1,6 @@
 package com.zq.vm.controller;
 
+import java.util.Date;
 import java.util.Optional;
 
 import com.zq.vm.utils.Pager;
@@ -49,6 +50,7 @@ public class CustomerController {
     @ResponseBody
     @RequestMapping(value = "/customer",method = RequestMethod.POST)
     public ResultJson save(Customer customer){
+    	customer.setCreateTime(new Date());
         customerService.save(customer);
         return new ResultJson(ResultJson.SUCCESS,"操作成功！");
     }
@@ -123,5 +125,29 @@ public class CustomerController {
     public String edit(final String id,final Model model){
         Optional.ofNullable(customerService.findOne(id)).ifPresent(customer -> model.addAttribute("bean",customer));
         return "customer/edit";
+    }
+    
+    /**
+     * 会员注册统计页面
+     * @param model
+     * @return
+     */
+    @RequestMapping(value = "/customer/registerList")
+    public String registerList(final Model model){
+        return "customer/registerList";
+    }
+    
+    /**
+     * 分页查询
+     * @param pageNumber
+     * @param pageSize
+     * @param customer
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "/customer/registerPage",method = RequestMethod.POST)
+    public Pager registerPage(@RequestParam(value = "pageNumber",defaultValue = "1") Integer pageNumber, @RequestParam(value = "pageSize",defaultValue = "10") Integer pageSize, String createTime){
+        Page<Customer> page = customerService.findPageByCreateTime(pageNumber, pageSize, createTime);
+        return new Pager(page.getContent(), page.getTotalElements());
     }
 }
