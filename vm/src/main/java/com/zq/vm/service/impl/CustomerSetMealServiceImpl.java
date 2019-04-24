@@ -6,17 +6,22 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import com.zq.vm.entity.AmountSpendRecord;
 import com.zq.vm.entity.Balance;
 import com.zq.vm.entity.CustomerSetMeal;
+import com.zq.vm.entity.CustomerSetMealProduction;
+import com.zq.vm.entity.NumbersSpendRecord;
 import com.zq.vm.entity.SetMealInformation;
 import com.zq.vm.repository.CustomerSetMealRepository;
 import com.zq.vm.repository.specification.CustomerSetMealSpecification;
+import com.zq.vm.service.AmountSpendRecordService;
 import com.zq.vm.service.BalanceService;
 import com.zq.vm.service.CustomerSetMealProductionService;
 import com.zq.vm.service.CustomerSetMealService;
+import com.zq.vm.service.NumbersSpendRecordService;
 import com.zq.vm.service.SetMealInformationService;
-import com.zq.vm.utils.SpringContextUtil;
 
 /**
  * 描述:会员套餐关系表业务实现 
@@ -25,6 +30,7 @@ import com.zq.vm.utils.SpringContextUtil;
  * @version 1.0
  */
 @Service
+@Transactional
 public class CustomerSetMealServiceImpl extends BaseServiceImpl<CustomerSetMeal, String> implements CustomerSetMealService{
 
 	@Autowired
@@ -35,6 +41,10 @@ public class CustomerSetMealServiceImpl extends BaseServiceImpl<CustomerSetMeal,
 	private SetMealInformationService setMealInformationService;
 	@Autowired
 	private CustomerSetMealProductionService customerSetMealProductionService;
+	@Autowired
+	private AmountSpendRecordService amountSpendRecordService;
+	@Autowired
+	private NumbersSpendRecordService numbersSpendRecordService;
 	
     @Override
     public void delete(String id) {
@@ -77,5 +87,35 @@ public class CustomerSetMealServiceImpl extends BaseServiceImpl<CustomerSetMeal,
 		balanceService.save(balance);
 		//保存会员套餐商品信息
 		customerSetMealProductionService.save(customerSetMeal1.getCustomerId(), customerSetMeal1.getSetMealId(), customerSetMeal1.getId());
+	}
+
+	@Override
+	public void substractProductionCountAndGenRecord(CustomerSetMealProduction customerSetMeal) {
+		//套餐商品数量减一
+		customerSetMeal.setCount(customerSetMeal.getCount()-1);
+		customerSetMealProductionService.save(customerSetMeal);
+		
+		CustomerSetMeal customerSetMeal1 = this.findOne(customerSetMeal.getCustomerSetMealId());
+		//生成消费记录
+		if(customerSetMeal.getType().equals("1")) {
+			//商品
+			AmountSpendRecord record = new AmountSpendRecord();
+			record.setCount(1);
+			record.setType("2");
+			record.setCreateUserId(customerSetMeal1.getCreateUserId());
+			record.setCustomerId(customerSetMeal1.getCustomerId());
+			record.setProductId(customerSetMeal.getProductId());
+			record.setSpendTime(new Date());
+			amountSpendRecordService.msave(record);
+		}else if(customerSetMeal.getType().equals("2")) {
+			//次数
+			NumbersSpendRecord record = new NumbersSpendRecord();
+			record.setCustomerId(customerSetMeal1.getCustomerId());
+			record.setServiceId(customerSetMeal.getProductId());
+			record.setSpendNumbers(1);
+			record.setSpendTime(new Date());
+			record.setType("2");
+			numbersSpendRecordService.save(record);
+		}
 	}
 }

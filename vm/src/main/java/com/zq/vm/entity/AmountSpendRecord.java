@@ -53,10 +53,15 @@ public class AmountSpendRecord{
 	@Column(name="count")
 	private Integer count;
 	/**
-	 * 数量
+	 * 创建人id
 	 */
 	@Column(name="createUserId")
 	private String createUserId;
+	/**
+	 * 类别  1->普通商品消费  2->套餐商品消费
+	 */
+	@Column(name="type")
+	private String type;
 	
 	/**
 	 * 获取主键
@@ -134,5 +139,11 @@ public class AmountSpendRecord{
 	}
 	public void setCreateUserId(String createUserId) {
 		this.createUserId = createUserId;
+	}
+	public String getType() {
+		return type;
+	}
+	public void setType(String type) {
+		this.type = type;
 	}
 }

@@ -48,6 +48,12 @@ public class NumbersSpendRecord{
 	 */
 	@Column(name="service_id",length = 32, nullable = false)
 	private String serviceId;
+	/**
+	 * 类别  1->普通次数消费  2->套餐次数消费
+	 */
+	@Column(name="type")
+	private String type;
+	
 	
 	/**
 	 * 获取主键
@@ -113,5 +119,11 @@ public class NumbersSpendRecord{
 	*/
 	public void setServiceId(String serviceId){
 		this.serviceId=serviceId;
+	}
+	public String getType() {
+		return type;
+	}
+	public void setType(String type) {
+		this.type = type;
 	}
 }

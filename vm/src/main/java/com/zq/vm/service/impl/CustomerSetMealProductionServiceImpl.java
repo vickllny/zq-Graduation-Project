@@ -1,24 +1,23 @@
 package com.zq.vm.service.impl;
 
-import com.zq.vm.repository.CustomerSetMealProductionRepository;
-import org.springframework.data.domain.Page;
-import org.springframework.stereotype.Service;
+import java.util.ArrayList;
+import java.util.List;
+
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.zq.vm.entity.CustomerSetMealProduction;
 import com.zq.vm.entity.ProductInformation;
 import com.zq.vm.entity.SetMealInformationProduct;
 import com.zq.vm.entity.vo.CustomerSetMealProductionVo;
+import com.zq.vm.repository.CustomerSetMealProductionRepository;
+import com.zq.vm.repository.specification.CustomerSetMealProductionSpecification;
 import com.zq.vm.service.CustomerSetMealProductionService;
-import com.zq.vm.service.CustomerSetMealService;
 import com.zq.vm.service.ProductInformationService;
 import com.zq.vm.service.SetMealInformationProductService;
-import com.zq.vm.utils.SpringContextUtil;
-import com.zq.vm.repository.specification.CustomerSetMealProductionSpecification;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * 描述:会员套餐商品关系表业务实现 
@@ -27,6 +26,7 @@ import java.util.List;
  * @version 1.0
  */
 @Service
+@Transactional
 public class CustomerSetMealProductionServiceImpl extends BaseServiceImpl<CustomerSetMealProduction, String> implements CustomerSetMealProductionService{
 
 	@Autowired

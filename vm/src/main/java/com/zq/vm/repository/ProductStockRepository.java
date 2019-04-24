@@ -25,7 +25,8 @@ public interface ProductStockRepository extends PagingAndSortingRepository<Produ
 	 * @param buildPageRequest
 	 * @return
 	 */
-	@Query(value = "select s.* from product_stock s left join product_information i on i.id = s.product_id where 1=1 and i.name like :name order by s.create_time desc", nativeQuery = true)
+	@Query(value = "select s.* from product_stock s left join product_information i on i.id = s.product_id where 1=1 and i.name like :name order by s.create_time desc",
+			countQuery = "select count(1) from product_stock s left join product_information i on i.id = s.product_id where 1=1 and i.name like :name order by s.create_time desc",nativeQuery = true)
 	Page<ProductStock> findPageByProductName(@Param(value = "name")String name, Pageable pageable);
 
 	/**

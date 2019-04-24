@@ -60,4 +60,10 @@ public interface AmountSpendRecordService{
      */
 	Page<AmountSpendRecord> findPageByCriteria(Integer pageNumber, Integer pageSize,
 			AmountSpendRecordVo amountSpendRecord);
+
+	/**
+	 * 普通保存
+	 * @param record
+	 */
+	void msave(AmountSpendRecord record);
 }

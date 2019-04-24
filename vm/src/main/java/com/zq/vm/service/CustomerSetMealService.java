@@ -1,6 +1,7 @@
 package com.zq.vm.service;
 
 import com.zq.vm.entity.CustomerSetMeal;
+import com.zq.vm.entity.CustomerSetMealProduction;
 
 import org.springframework.data.domain.Page;
 
@@ -55,4 +56,10 @@ public interface CustomerSetMealService{
      * @param customerSetMeal
      */
 	void saveAndDeduction(CustomerSetMeal customerSetMeal);
+
+	/**
+	 * 套餐商品减一并且生成消费记录(商品消费)
+	 * @param customerSetMeal
+	 */
+	void substractProductionCountAndGenRecord(CustomerSetMealProduction customerSetMeal);
 }

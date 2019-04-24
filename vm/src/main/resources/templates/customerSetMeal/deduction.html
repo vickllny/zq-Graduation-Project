@@ -14,18 +14,22 @@
     		width: 100%;
     	}
     	.content {
-    		height: 90px;
+    		height: 340px;
+    		width: 96%;
+    		border-right: none;
     	}
     	.content .contentSelect div {
-    		width: 28%;
+    		width: 90%;
     		float: left;
-    		margin-left: 2px;
+    		margin-left: 7px;
+    		padding: 0 8px;
     	}
     	.content .contentSelect div .labName {
     		width: 88%;
     	}
     	.btns {
     		float: right;
+    		border: none;
     	}
     </style>
 </head>
@@ -58,17 +62,17 @@
 	layui.use(['element','table'], function(){
 	  var table = layui.table;
 	  var element = layui.element;
-      
+	  $(".content").mCustomScrollbar({
+    	  scrollInertia: 100,
+    	  axis:"y",
+    	  theme:"dark"
+      });
       //初始化已经选择了的
       AjaxUtil.syncGet(base + '/customerSetMeal/deduction?id='+id, function(json){
     	  $.each(json, function(i, value){
     		  doSelect(value.id,value.productName,value.type,value.count);
     	  });
-      });
-      $(".content").mCustomScrollbar({
-    	  scrollInertia: 100,
-    	  axis:"y",
-    	  theme:"dark"
+    	  $(".content").mCustomScrollbar('update');
       });
 	});
 	//选择后的事件
@@ -81,10 +85,30 @@
 		var color = type == 1 ? '#FF9933' : '#3399CC';
 		var html = '<div id="'+id+'" type="'+type+'" style="background-color: '+color+'">';
 		html += '<span class="labName" title="'+tagName+name+'">'+tagName+name+'</span>';
-		html += '<span class="labCount">'+(count?count:1)+'</span>';
+		html += '<span class="labCount">'+(count?count:0)+'</span>';
+		html += '<i class="layui-icon substract" onclick="substract(this)">&#8211;</i>';
 		html += '</div>';
 		$('.contentSelect').append(html);
 		$('.content').mCustomScrollbar('update');
+	}
+	//substract
+	function substract(_this){
+		var count = parseInt($(_this).parent().find('.labCount').text());
+		if(count == 0){
+			layer.alert('商品已经消费完，没有了！', function(index){
+				layer.close(index);				
+			})
+			return;
+		}
+		var id = $(_this).parent().attr('id');
+		AjaxUtil.syncGet(base + '/customerSetMeal/substract/'+id, function(json){
+            layer.alert(json.message,function(index){
+                if(json && json.status == 'success'){
+                	$(_this).parent().find('.labCount').text(json.data);
+                }
+                layer.close(index);
+            });
+		})
 	}
 </script>
 

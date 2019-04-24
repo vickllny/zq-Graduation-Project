@@ -27,6 +27,7 @@ import com.zq.vm.entity.vo.CustomerSetMealProductionVo;
 import com.zq.vm.entity.vo.CustomerSetMealVo;
 import com.zq.vm.entity.Customer;
 import com.zq.vm.entity.CustomerSetMeal;
+import com.zq.vm.entity.CustomerSetMealProduction;
 import com.zq.vm.entity.ProductInformation;
 import com.zq.vm.service.CustomerService;
 import com.zq.vm.service.CustomerSetMealProductionService;
@@ -202,4 +203,30 @@ public class CustomerSetMealController {
     	List<CustomerSetMealProductionVo> vo = customerSetMealProductionService.findVoByCustomerSetMealId(id);
     	return vo;
     }
+    
+    /**
+     * 消费商品
+     * @param id
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "/customerSetMeal/substract/{id}", method = RequestMethod.GET)
+    public ResultJson substract(@PathVariable(value = "id")final String id) {
+    	CustomerSetMealProduction customerSetMeal = customerSetMealProductionService.findOne(id);
+    	try {
+        	if(customerSetMeal == null) {
+        		return new ResultJson(ResultJson.ERROR, "商品不存在，请重试！");
+        	}
+        	if(customerSetMeal.getCount() == 0) {
+        		return new ResultJson(ResultJson.ERROR, "商品数量已经使用完，没有了！");
+        	}
+        	customerSetMealService.substractProductionCountAndGenRecord(customerSetMeal);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return new ResultJson(ResultJson.ERROR, e.getMessage());
+		}
+    	return new ResultJson(ResultJson.SUCCESS, "操作成功", customerSetMeal.getCount());
+    	
+    }
+    
 }

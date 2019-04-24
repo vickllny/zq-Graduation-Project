@@ -6,6 +6,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.zq.vm.entity.AmountSpendRecord;
 import com.zq.vm.entity.Balance;
@@ -24,6 +25,7 @@ import com.zq.vm.service.ProductInformationService;
  * @version 1.0
  */
 @Service
+@Transactional
 public class AmountSpendRecordServiceImpl extends BaseServiceImpl<AmountSpendRecord, String> implements AmountSpendRecordService{
 
 	@Autowired
@@ -73,5 +75,10 @@ public class AmountSpendRecordServiceImpl extends BaseServiceImpl<AmountSpendRec
 		String customerName = vo != null && StringUtils.isBlank(vo.getCustomerName())?"%%" : "%"+vo.getCustomerName()+"%";
 		String productName = vo != null && StringUtils.isBlank(vo.getProductName())?"%%" : "%"+vo.getProductName()+"%";
 		return amountSpendRecordRepository.findSearchPage(customerName, productName, buildPageRequest(pageNumber, pageSize));
+	}
+
+	@Override
+	public void msave(AmountSpendRecord record) {
+		amountSpendRecordRepository.save(record);
 	}
 }

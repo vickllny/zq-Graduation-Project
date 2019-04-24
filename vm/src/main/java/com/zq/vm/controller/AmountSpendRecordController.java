@@ -85,6 +85,7 @@ public class AmountSpendRecordController {
         String userId = String.valueOf(session.getAttribute("userId"));
         amountSpendRecord.setCreateUserId(userId);
         amountSpendRecord.setSpendTime(new Date());
+        amountSpendRecord.setType("1");
         amountSpendRecordService.save(amountSpendRecord);
         
         return new ResultJson(ResultJson.SUCCESS,"操作成功！");
