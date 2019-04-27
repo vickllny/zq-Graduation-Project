@@ -6,7 +6,7 @@ import com.zq.vm.entity.SetMealInformationProduct;
 
 /**
  * 套餐关联商品信息vo
- * @author admin
+ * @author zou.qian
  *
  */
 public class SetMealInformationVo {

@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="utf-8">
-    <title>会员</title>
+    <title>商品信息</title>
     <meta name="renderer" content="webkit">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -15,7 +15,7 @@
     <div class="layui-row">
         <div class="layui-col-md12">
             <div class="layui-form-item searchBox">
-				<div class="layui-inline"><input type="text" id="createTime" name="createTime" placeholder="请选择月份" class="layui-input"></div>
+				<div class="layui-inline"><input type="text" name="name" placeholder="请输入商品名称" class="layui-input"></div>
         		<button class="layui-btn layui-btn-sm" onclick="search()">搜索</button>
             </div>
             <div class="tableBox">
@@ -32,6 +32,11 @@
     </div>
 </script>
 
+<script type="text/html" id="operation">
+    <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+</script>
+
 
 <script th:inline="javascript">
     var base = [[${base}]];
@@ -42,42 +47,21 @@
 
 <script>
     var table1 = null;
-    layui.use(['table','laydate'], function(){
+    layui.use(['table'], function(){
         var table = layui.table;
-		var laydate = layui.laydate;
-	  	laydate.render({
-		    elem: '#createTime'
-		    ,type: 'month'
-		});
+
         var cols = [
-            {field:'name', title:'会员名字'},
-            {field:'sex', title:'性别',templet: function (data) {
-                    if (data.sex == 1) {
-                        return '男';
-                    }else if(data.sex == 0){
-                        return '女';
-                    }
-                    return '';
-                }},
-            {field: 'del', title: '状态', templet: function(data){
-            	if(data.del == 1){
-            		return '已禁用';
-            	}else {
-            		return '已启用';
-            	}
-            }},
-            {field:'phoneNumber', title:'电话'},
-            {field:'birth', title:'出生年月'},
-            {field:'createTime', title:'注册时间'}
+            {field:'name', title:'商品名称'},
+            {field:'count', title:'商品售卖数量'},
         ]
         table1 = table.render({
             elem: '#table1',
-            url: base + '/customer/registerPage',
-            //toolbar: '#toolbar',
-            title: '会员表',
+            url: base + '/productInformation/rankPage',
+            toolbar: true,
+            title: '商品信息表',
             cellMinWidth: 200,
             cols: [cols],
-            height: 'full-70',
+            height: 'full-10',
             page: true,
             request: {
                 pageName: 'pageNumber',
@@ -85,12 +69,13 @@
             },
             method: 'post'
         });
+
     });
     //搜索
     function search(){
     	table1.reload({
     		where: {
-    			createTime: $("input[name='createTime']").val()
+    			name : $("input[name='name']").val()
     		}
     	})
     }

@@ -1,6 +1,7 @@
 package com.zq.vm.service;
 
 import com.zq.vm.entity.ProductStock;
+import com.zq.vm.entity.vo.ProductStockVo;
 
 import org.springframework.data.domain.Page;
 
@@ -65,4 +66,13 @@ public interface ProductStockService{
 	 * @return
 	 */
 	List<ProductStock> findByProductId(String productId);
+
+	/**
+	 * 出库入库统计
+	 * @param pageNumber
+	 * @param pageSize
+	 * @param vo
+	 * @return
+	 */
+	Page<ProductStock> findstatisticsPage(Integer pageNumber, Integer pageSize, ProductStockVo vo);
 }

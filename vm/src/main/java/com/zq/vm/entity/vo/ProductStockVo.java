@@ -30,6 +30,12 @@ public class ProductStockVo {
 	@DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
 	private Date createTime;
 	
+	@DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
+	private Date startTime;
+	
+	@DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
+	private Date endTime;
+	
 	public static ProductStockVo build(ProductStock productStock,String productName) {
 		ProductStockVo productStockVo = new ProductStockVo();
 		BeanUtils.copyProperties(productStock, productStockVo);
@@ -68,4 +74,29 @@ public class ProductStockVo {
 	public void setProductName(String productName) {
 		this.productName = productName;
 	}
+
+	public Date getCreateTime() {
+		return createTime;
+	}
+
+	public void setCreateTime(Date createTime) {
+		this.createTime = createTime;
+	}
+
+	public Date getStartTime() {
+		return startTime;
+	}
+
+	public void setStartTime(Date startTime) {
+		this.startTime = startTime;
+	}
+
+	public Date getEndTime() {
+		return endTime;
+	}
+
+	public void setEndTime(Date endTime) {
+		this.endTime = endTime;
+	}
+	
 }

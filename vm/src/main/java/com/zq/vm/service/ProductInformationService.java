@@ -49,4 +49,13 @@ public interface ProductInformationService{
      * @return
      */
     List<ProductInformation> findAll();
+
+    /**
+     * 商品业务排行分页查询
+     * @param pageNumber
+     * @param pageSize
+     * @param productName
+     * @return
+     */
+	Page<Object[]> findRankPage(Integer pageNumber, Integer pageSize, String productName);
 }

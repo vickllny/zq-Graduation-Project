@@ -3,7 +3,7 @@ package com.zq.vm.service.impl;
 import com.zq.vm.repository.ProductInformationRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
-
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.zq.vm.entity.ProductInformation;
@@ -48,4 +48,10 @@ public class ProductInformationServiceImpl extends BaseServiceImpl<ProductInform
     public List<ProductInformation> findAll() {
         return super.findList(productInformationRepository.findAll());
     }
+
+	@Override
+	public Page<Object[]> findRankPage(Integer pageNumber, Integer pageSize, String productName) {
+		productName = StringUtils.isNotBlank(productName)? "%" +productName + "%" : "%%";
+		return productInformationRepository.findRankPage(productName, buildPageRequest(pageNumber, pageSize));
+	}
 }

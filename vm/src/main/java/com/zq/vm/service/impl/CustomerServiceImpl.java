@@ -7,9 +7,11 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.zq.vm.entity.Customer;
+import com.zq.vm.entity.vo.CustomerBusinessVo;
 import com.zq.vm.service.CustomerService;
 import com.zq.vm.repository.specification.CustomerSpecification;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -62,5 +64,25 @@ public class CustomerServiceImpl extends BaseServiceImpl<Customer, String> imple
 		String startTime = createTime + "-1 00:00:00";
 		String endTime = createTime + "-31 00:00:00";
 		return customerRepository.findPageByCreateTimeBetween(startTime, endTime, buildPageRequest(pageNumber, pageSize));
+	}
+
+	@Override
+	public Page<Object[]> findPageByCustomerIdAndType(Integer pageNumber, Integer pageSize, String customerId,
+			String type) {
+		customerId = StringUtils.isBlank(customerId)? "%%" : "%" + customerId +"%";
+		type = StringUtils.isBlank(type)? "%%" : "%" + type +"%";
+		return customerRepository.findPageByCustomerIdAndType(customerId, type, buildPageRequest(pageNumber, pageSize));
+	}
+
+	@Override
+	public Page<Object[]> findConsumeRankPage(Integer pageNumber, Integer pageSize, String name) {
+		name = StringUtils.isBlank(name)? "%%" : "%" + name +"%";
+		return customerRepository.findConsumeRankPage(name, buildPageRequest(pageNumber, pageSize));
+	}
+
+	@Override
+	public Page<Customer> findBirthRemindPage(Integer pageNumber, Integer pageSize, Date nowDate, String name) {
+		name = StringUtils.isBlank(name)? "%%" : "%" + name +"%";
+		return customerRepository.findBirthRemindPage(nowDate, name, buildPageRequest(pageNumber, pageSize));
 	}
 }

@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
@@ -115,6 +116,13 @@ public class ProductStockController {
         return new Pager(page.getContent(), page.getTotalElements());
     }
     
+    /**
+     * 列表数据页面
+     * @param pageNumber
+     * @param pageSize
+     * @param name
+     * @return
+     */
     @ResponseBody
     @RequestMapping(value = "/productStock/productPage",method = RequestMethod.POST)
     public Pager productPage(@RequestParam(value = "pageNumber",defaultValue = "1") Integer pageNumber, @RequestParam(value = "pageSize",defaultValue = "10") Integer pageSize, String name){
@@ -160,5 +168,30 @@ public class ProductStockController {
     public String edit(final String id,final Model model){
         Optional.ofNullable(productStockService.findOne(id)).ifPresent(productStock -> model.addAttribute("bean",productStock));
         return "productStock/edit";
+    }
+    
+    @RequestMapping(value = "/productStock/statistics")
+    public String statistics(final Model model){
+        return "productStock/statistics";
+    }
+    
+    
+    @ResponseBody
+    @RequestMapping(value = "/productStock/statisticsPage",method = RequestMethod.POST)
+    public Pager statisticsPage(@RequestParam(value = "pageNumber",defaultValue = "1") Integer pageNumber, @RequestParam(value = "pageSize",defaultValue = "10") Integer pageSize,
+    		final ProductStockVo vo){
+        Page<ProductStock> page = productStockService.findstatisticsPage(pageNumber, pageSize, vo);
+        List<ProductStockVo> list = new ArrayList<>(page.getSize());
+        page.forEach(productStock -> {
+        	ProductInformation product = productInformationService.findOne(productStock.getProductId());
+        	if(StringUtils.isNotBlank(vo.getProductName())) {
+    			if(product.getName().contains(vo.getProductName())) {
+    				list.add(ProductStockVo.build(productStock, product.getName()));
+    			}
+    		}else {
+    			list.add(ProductStockVo.build(productStock, product.getName()));
+    		}
+        });
+        return new Pager(list, list.size());
     }
 }

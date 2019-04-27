@@ -1,6 +1,10 @@
 package com.zq.vm.controller;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import com.zq.vm.utils.Pager;
@@ -15,6 +19,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.zq.vm.entity.ResultJson;
+import com.zq.vm.entity.vo.CustomerBusinessVo;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.zq.vm.entity.Customer;
 import com.zq.vm.service.CustomerService;
 
@@ -148,6 +155,102 @@ public class CustomerController {
     @RequestMapping(value = "/customer/registerPage",method = RequestMethod.POST)
     public Pager registerPage(@RequestParam(value = "pageNumber",defaultValue = "1") Integer pageNumber, @RequestParam(value = "pageSize",defaultValue = "10") Integer pageSize, String createTime){
         Page<Customer> page = customerService.findPageByCreateTime(pageNumber, pageSize, createTime);
+        return new Pager(page.getContent(), page.getTotalElements());
+    }
+    
+    /**
+     * 会员业务单据统计
+     * @param model
+     * @return
+     * @throws JsonProcessingException 
+     */
+    @RequestMapping(value = "/customer/businessList")
+    public String businessList(final Model model) throws JsonProcessingException{
+    	//类型map
+    	Map<String, String> typeMap = new HashMap<>();
+    	typeMap.put("service", "服务");
+    	typeMap.put("product", "商品");
+    	typeMap.put("setMeal", "套餐");
+    	ObjectMapper objectMapper = new ObjectMapper();
+    	
+    	model.addAttribute("typeMapJson", objectMapper.writeValueAsString(typeMap));
+    	model.addAttribute("typeMap", typeMap);
+    	//所有会员
+    	model.addAttribute("customers", customerService.findAll());
+    	return "customer/businessList";
+    }
+    
+    /**
+     * 业务单据分页查询
+     * @param pageNumber
+     * @param pageSize
+     * @param customerId
+     * @param type
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "/customer/businessPage",method = RequestMethod.POST)
+    public Pager businessPage(@RequestParam(value = "pageNumber",defaultValue = "1") Integer pageNumber, @RequestParam(value = "pageSize",defaultValue = "10") Integer pageSize, 
+    		String customerId,String type){
+        Page<Object[]> page = customerService.findPageByCustomerIdAndType(pageNumber, pageSize, customerId, type);
+        List<CustomerBusinessVo> vo = new ArrayList<>(page.getNumberOfElements());
+        page.forEach(array -> {
+        	vo.add(CustomerBusinessVo.build(array));
+        });
+        return new Pager(vo, page.getTotalElements());
+    }
+    
+    /**
+     * 会员消费统计排行
+     * @param model
+     * @return
+     */
+    @RequestMapping(value = "/customer/consumeRank")
+    public String consumeRank(final Model model){
+        return "customer/consumeRankList";
+    }
+    
+    /**
+     * 消费排行
+     * @param pageNumber
+     * @param pageSize
+     * @param name
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "/customer/consumeRankPage",method = RequestMethod.POST)
+    public Pager consumeRankPage(@RequestParam(value = "pageNumber",defaultValue = "1") Integer pageNumber, @RequestParam(value = "pageSize",defaultValue = "10") Integer pageSize, 
+    		String name){
+        Page<Object[]> page = customerService.findConsumeRankPage(pageNumber, pageSize, name);
+        List<CustomerBusinessVo> vo = new ArrayList<>(page.getNumberOfElements());
+        page.forEach(array -> {
+        	vo.add(CustomerBusinessVo.buildRank(array));
+        });
+        return new Pager(vo, page.getTotalElements());
+    }
+    
+    /**
+     * 会员生日提醒页面
+     * @param model
+     * @return
+     */
+    @RequestMapping(value = "/customer/birthRemind")
+    public String birthRemind(final Model model){
+        return "customer/birthRemindList";
+    }
+    
+    /**
+     * 生日提醒分页数据
+     * @param pageNumber
+     * @param pageSize
+     * @param name
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "/customer/birthRemindPage",method = RequestMethod.POST)
+    public Pager birthRemindPage(@RequestParam(value = "pageNumber",defaultValue = "1") Integer pageNumber, @RequestParam(value = "pageSize",defaultValue = "10") Integer pageSize, String name){
+        Date nowDate = new Date();
+    	Page<Customer> page = customerService.findBirthRemindPage(pageNumber, pageSize, nowDate, name);
         return new Pager(page.getContent(), page.getTotalElements());
     }
 }

@@ -8,16 +8,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <link rel="stylesheet" th:href="@{/layui/css/layui.css}">
     <link rel="stylesheet" th:href="@{/ztree/css/zTreeStyle.css}" type="text/css">
-    <link rel="stylesheet" th:href="@{/core/css/style.css}" type="text/css">
 </head>
 <body>
 <div>
     <div class="layui-row">
         <div class="layui-col-md12">
-            <div class="layui-form-item searchBox">
-				<div class="layui-inline"><input type="text" id="createTime" name="createTime" placeholder="请选择月份" class="layui-input"></div>
-        		<button class="layui-btn layui-btn-sm" onclick="search()">搜索</button>
-            </div>
             <div class="tableBox">
                 <table class="layui-hide" id="table1" lay-filter="table1"></table>
             </div>
@@ -32,6 +27,17 @@
     </div>
 </script>
 
+<script type="text/html" id="operation">
+    <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">
+  {{#  if(d.del == 1){ }}
+    	启用
+  {{#  } else { }}
+   	 	禁用
+  {{#  } }}
+	</a>
+</script>
+
 
 <script th:inline="javascript">
     var base = [[${base}]];
@@ -42,15 +48,11 @@
 
 <script>
     var table1 = null;
-    layui.use(['table','laydate'], function(){
+    layui.use(['table'], function(){
         var table = layui.table;
-		var laydate = layui.laydate;
-	  	laydate.render({
-		    elem: '#createTime'
-		    ,type: 'month'
-		});
+
         var cols = [
-            {field:'name', title:'会员名字'},
+            {field:'name', title:'名字'},
             {field:'sex', title:'性别',templet: function (data) {
                     if (data.sex == 1) {
                         return '男';
@@ -67,17 +69,16 @@
             	}
             }},
             {field:'phoneNumber', title:'电话'},
-            {field:'birth', title:'出生年月'},
-            {field:'createTime', title:'注册时间'}
+            {field:'birth', title:'出生日期'}
         ]
         table1 = table.render({
             elem: '#table1',
-            url: base + '/customer/registerPage',
-            //toolbar: '#toolbar',
+            url: base + '/customer/birthRemindPage',
+            toolbar: true,
             title: '会员表',
             cellMinWidth: 200,
             cols: [cols],
-            height: 'full-70',
+            height: 'full-10',
             page: true,
             request: {
                 pageName: 'pageNumber',
@@ -85,15 +86,8 @@
             },
             method: 'post'
         });
+
     });
-    //搜索
-    function search(){
-    	table1.reload({
-    		where: {
-    			createTime: $("input[name='createTime']").val()
-    		}
-    	})
-    }
 </script>
 
 </body>

@@ -1,9 +1,11 @@
 package com.zq.vm.service;
 
 import com.zq.vm.entity.Customer;
+import com.zq.vm.entity.vo.CustomerBusinessVo;
 
 import org.springframework.data.domain.Page;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -65,4 +67,34 @@ public interface CustomerService{
 	 * @return
 	 */
 	Page<Customer> findPageByCreateTime(Integer pageNumber, Integer pageSize, String createTime);
+
+	/**
+	 * 会员业务单据统计
+	 * @param pageNumber
+	 * @param pageSize
+	 * @param customerId
+	 * @param type
+	 * @return
+	 */
+	Page<Object[]> findPageByCustomerIdAndType(Integer pageNumber, Integer pageSize, String customerId,
+			String type);
+
+	/**
+	 * 消费排行
+	 * @param pageNumber
+	 * @param pageSize
+	 * @param name
+	 * @return
+	 */
+	Page<Object[]> findConsumeRankPage(Integer pageNumber, Integer pageSize, String name);
+
+	/**
+	 * 查询会员生日分页数据
+	 * @param pageNumber
+	 * @param pageSize
+	 * @param nowDate
+	 * @param name
+	 * @return
+	 */
+	Page<Customer> findBirthRemindPage(Integer pageNumber, Integer pageSize, Date nowDate, String name);
 }

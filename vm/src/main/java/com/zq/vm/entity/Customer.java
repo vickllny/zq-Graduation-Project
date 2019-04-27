@@ -45,11 +45,6 @@ public class Customer{
 	@Column(name="phone_number",length = 11, nullable = true)
 	private String phoneNumber;
 	/**
-	 * 年龄
-	 */
-	@Column(name="age",length = 3, nullable = true)
-	private Integer age;
-	/**
 	 * 是否删除 1->删除 0->未删除
 	 */
 	@Column(name="del",length = 3, nullable = true)
@@ -61,6 +56,13 @@ public class Customer{
 	@DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
 	@Column(name = "create_time")
 	private Date createTime;
+	/**
+	 * birth
+	 */
+	@JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd")
+	@DateTimeFormat(pattern="yyyy-MM-dd")
+	@Column(name = "birth")
+	private Date birth;
 	/**
 	 * 获取主键
 	 */
@@ -113,19 +115,6 @@ public class Customer{
 	public void setPhoneNumber(String phoneNumber){
 		this.phoneNumber=phoneNumber;
 	}
-	/**
-	 * 获取年龄
-	 */
-	public Integer getAge(){
-		return age;
-	}
-	/**
-	* 设置年龄
-	* @param age 年龄
-	*/
-	public void setAge(Integer age){
-		this.age=age;
-	}
 	public Integer getDel() {
 		return del;
 	}
@@ -138,4 +127,11 @@ public class Customer{
 	public void setCreateTime(Date createTime) {
 		this.createTime = createTime;
 	}
+	public Date getBirth() {
+		return birth;
+	}
+	public void setBirth(Date birth) {
+		this.birth = birth;
+	}
+	
 }
