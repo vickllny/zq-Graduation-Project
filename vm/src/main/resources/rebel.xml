@@ -7,7 +7,7 @@
 <application generated-by="eclipse" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.zeroturnaround.com" xsi:schemaLocation="http://www.zeroturnaround.com http://update.zeroturnaround.com/jrebel/rebel-2_1.xsd">
 
 	<classpath>
-		<dir name="/Users/wisesoft/vickllny/javadev/workspace/ws8/zq-Graduation-Project/vm/target/classes">
+		<dir name="/Users/zou.qian/vickllny/javadev/workspace/ws8/zq-Graduation-Project/vm/target/classes">
 		</dir>
 	</classpath>
 

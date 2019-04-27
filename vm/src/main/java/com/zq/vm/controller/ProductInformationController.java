@@ -1,5 +1,7 @@
 package com.zq.vm.controller;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.zq.vm.entity.ResultJson;
+import com.zq.vm.entity.vo.ProductInformationVo;
 import com.zq.vm.entity.ProductInformation;
 import com.zq.vm.service.ProductInformationService;
 import com.zq.vm.utils.Pager;
@@ -119,5 +122,41 @@ public class ProductInformationController {
     public String edit(final String id,final Model model){
         Optional.ofNullable(productInformationService.findOne(id)).ifPresent(productInformation -> model.addAttribute("bean",productInformation));
         return "productInformation/edit";
+    }
+    
+    /**
+     * 统计页面
+     * @param model
+     * @return
+     */
+    @RequestMapping(value = "/productInformation/statistics")
+    public String statistics(final Model model){
+        return "productInformation/statisticsList";
+    }
+    
+    /**
+     * 商品业务排行
+     * @param model
+     * @return
+     */
+    @RequestMapping(value = "/productInformation/businessRank")
+    public String businessRank(final Model model){
+        return "productInformation/businessRank";
+    }
+    
+    /**
+     * 分页查询
+     * @param pageNumber
+     * @param pageSize
+     * @param productInformation
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "/productInformation/rankPage",method = RequestMethod.POST)
+    public Pager rankPage(@RequestParam(value = "pageNumber",defaultValue = "1") Integer pageNumber, @RequestParam(value = "pageSize",defaultValue = "10") Integer pageSize, String name){
+        Page<Object[]> page = productInformationService.findRankPage(pageNumber, pageSize, name);
+        List<ProductInformationVo> vo = new ArrayList<>(page.getNumberOfElements());
+        page.forEach(array -> vo.add(ProductInformationVo.build(array)));
+        return new Pager(vo, page.getTotalElements());
     }
 }

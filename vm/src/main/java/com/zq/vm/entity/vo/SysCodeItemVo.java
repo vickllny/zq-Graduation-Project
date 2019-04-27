@@ -6,7 +6,7 @@ import com.zq.vm.entity.SysCodeItem;
 
 /**
  * sysCodeItemVo
- * @author admin
+ * @author zou.qian
  *
  */
 public class SysCodeItemVo {

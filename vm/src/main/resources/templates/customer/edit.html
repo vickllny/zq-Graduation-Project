@@ -25,6 +25,12 @@
                 </div>
             </div>
             <div class="layui-form-item">
+                <label class="layui-form-label">出生日期</label>
+                <div class="layui-input-block">
+                    <input type="text" name="birth" id="birth" th:value="${bean?.birth}" lay-verify="required" autocomplete="off" placeholder="出生日期" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
                 <label class="layui-form-label">性别</label>
                 <div class="layui-input-block">
                     <select name="sex" lay-filter="sex">
@@ -48,12 +54,6 @@
                     <input type="text" name="phoneNumber" th:value="${bean?.phoneNumber}" lay-verify="required" autocomplete="off" placeholder="电话" class="layui-input">
                 </div>
             </div>
-            <div class="layui-form-item">
-                <label class="layui-form-label">年龄</label>
-                <div class="layui-input-block">
-                    <input type="text" name="age" th:value="${bean?.age}" lay-verify="required" autocomplete="off" placeholder="年龄" class="layui-input">
-                </div>
-            </div>
         </div>
         <div class="f-layout-b-btn">
             <button class="layui-btn layui-btn-normal" type="button" lay-submit lay-filter="save">保存</button>
@@ -75,8 +75,12 @@
 
 
 <script>
-    layui.use('form', function(){
+    layui.use(['form','laydate'], function(){
         var form = layui.form;
+        var laydate = layui.laydate;
+        laydate.render({
+            elem: '#birth',
+         });
         //监听提交
         form.on('submit(save)', function(data){
             var $this = $(this);

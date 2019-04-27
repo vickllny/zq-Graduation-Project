@@ -26,7 +26,6 @@ public class CustomerSpecification {
             Optional.ofNullable(customer.getName()).ifPresent(name -> predicates.add(criteriaBuilder.equal(root.get("name").as(String.class), name)));
             Optional.ofNullable(customer.getSex()).ifPresent(sex -> predicates.add(criteriaBuilder.equal(root.get("sex").as(String.class), sex)));
             Optional.ofNullable(customer.getPhoneNumber()).ifPresent(phoneNumber -> predicates.add(criteriaBuilder.equal(root.get("phoneNumber").as(String.class), phoneNumber)));
-            Optional.ofNullable(customer.getAge()).ifPresent(age -> predicates.add(criteriaBuilder.equal(root.get("age").as(String.class), age)));
             Optional.ofNullable(customer.getDel()).ifPresent(del -> predicates.add(criteriaBuilder.equal(root.get("del").as(String.class), del)));
 			return criteriaQuery.where(criteriaBuilder.and(predicates.toArray(new Predicate[predicates.size()]))).getRestriction();
         };

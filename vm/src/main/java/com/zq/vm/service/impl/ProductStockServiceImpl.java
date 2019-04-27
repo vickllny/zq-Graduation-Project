@@ -7,9 +7,11 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.zq.vm.entity.ProductStock;
+import com.zq.vm.entity.vo.ProductStockVo;
 import com.zq.vm.service.ProductStockService;
 import com.zq.vm.repository.specification.ProductStockSpecification;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -58,5 +60,11 @@ public class ProductStockServiceImpl extends BaseServiceImpl<ProductStock, Strin
 	@Override
 	public List<ProductStock> findByProductId(String productId) {
 		return productStockRepository.findByProductId(productId);
+	}
+
+	@Override
+	public Page<ProductStock> findstatisticsPage(Integer pageNumber, Integer pageSize, ProductStockVo vo) {
+		Page<ProductStock> page = productStockRepository.findAll(ProductStockSpecification.findstatisticsSpecification(vo), buildPageRequest(pageNumber, pageSize));
+		return page;
 	}
 }
